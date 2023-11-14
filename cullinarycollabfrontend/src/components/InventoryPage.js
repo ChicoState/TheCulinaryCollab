@@ -4,6 +4,7 @@ import './InventoryPage.css';
 const RecipeFinder = ({ inventory }) => {
     const [ingredients, setIngredients] = useState('');
     const [recipes, setRecipes] = useState([]);
+    const [filteredRecipes, setFilteredRecipes] = useState([]);
 
     const handleIngredientsChange = (e) => {
         setIngredients(e.target.value);
@@ -13,7 +14,6 @@ const RecipeFinder = ({ inventory }) => {
         const availableRecipes = [
             { name: 'Recipe 1', ingredients: ['Ingredient A', 'Ingredient B'] },
             { name: 'Recipe 2', ingredients: ['Ingredient B', 'Ingredient C'] },
-            // Add more recipes as needed
         ];
 
         const matchingRecipes = availableRecipes.filter(recipe =>
@@ -21,6 +21,15 @@ const RecipeFinder = ({ inventory }) => {
         );
 
         setRecipes(matchingRecipes);
+        setFilteredRecipes(matchingRecipes);
+    };
+
+    const searchRecipes = () => {
+        const matchingRecipes = recipes.filter(recipe =>
+            recipe.ingredients.every(ingredient => ingredients.includes(ingredient))
+        );
+
+        setFilteredRecipes(matchingRecipes);
     };
 
     return (
@@ -31,10 +40,11 @@ const RecipeFinder = ({ inventory }) => {
                 <input type="text" value={ingredients} onChange={handleIngredientsChange} />
             </div>
             <button type="button" onClick={findRecipes}>Find Recipes</button>
+            <button type="button" onClick={searchRecipes}>Search Recipes</button>
 
             <h3>Matching Recipes:</h3>
             <ul>
-                {recipes.map((recipe, index) => (
+                {filteredRecipes.map((recipe, index) => (
                     <li key={index}>{recipe.name}</li>
                 ))}
             </ul>
@@ -42,7 +52,7 @@ const RecipeFinder = ({ inventory }) => {
     );
 };
 
-const AddItemModel = ({ addItem, closeModel }) => {
+const AddItemModal = ({ addItem, closeModal }) => {
     const [itemName, setItemName] = useState('');
     const [itemQuantity, setItemQuantity] = useState('');
     const [itemCategory, setItemCategory] = useState('');
@@ -66,12 +76,12 @@ const AddItemModel = ({ addItem, closeModel }) => {
             quantity: itemQuantity,
             category: itemCategory,
         });
-        closeModel();
+        closeModal();
     };
 
     return (
-        <div className="model-overlay">
-            <div className="add-item-model">
+        <div className="modal-overlay">
+            <div className="add-item-modal">
                 <h2>Add Inventory Item</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -88,7 +98,7 @@ const AddItemModel = ({ addItem, closeModel }) => {
                     </div>
                     <button type="submit">Add Item</button>
                 </form>
-                <button className="close-model-button" onClick={closeModel}>
+                <button className="close-modal-button" onClick={closeModal}>
                     Close
                 </button>
             </div>
@@ -102,34 +112,32 @@ const SampleInventory = [
     { name: 'Lime Juice', quantity: '1 bottle', category: 'Juices' },
 ];
 
-
-
 const InventoryPage = () => {
     const [inventory, setInventory] = useState(SampleInventory);
-    const [isAddItemModelOpen, setAddItemModelOpen] = useState(false);
+    const [isAddItemModalOpen, setAddItemModalOpen] = useState(false);
 
     const addItem = (item) => {
         setInventory([...inventory, item]);
     };
 
-    const openAddItemModel = () => {
-        setAddItemModelOpen(true);
+    const openAddItemModal = () => {
+        setAddItemModalOpen(true);
     };
 
-    const closeAddItemModel = () => {
-        setAddItemModelOpen(false);
+    const closeAddItemModal = () => {
+        setAddItemModalOpen(false);
     };
 
     return (
         <div className="inventory-page">
             <h2>Inventory</h2>
-            <button onClick={openAddItemModel}>Add Item</button>
-	    <ul>{inventory.map((item, index) => (
+            <button onClick={openAddItemModal}>Add Item</button>
+            <ul>{inventory.map((item, index) => (
                     <li key={index}>{item.name} - {item.quantity} - {item.category}</li>
                 ))}</ul>
             <RecipeFinder inventory={inventory} />
-            {isAddItemModelOpen && (
-                <AddItemModel addItem={addItem} closeModel={closeAddItemModel} />
+            {isAddItemModalOpen && (
+                <AddItemModal addItem={addItem} closeModal={closeAddItemModal} />
             )}
         </div>
     );
