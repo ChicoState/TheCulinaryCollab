@@ -1,121 +1,119 @@
-/* SocialPage.css */
-
 .social-page-container {
-  display: flex;
-  justify-content: space-around;
-  padding: 20px;
-  background-color: #f5f5f5; /* Light gray background color */
+	display: flex;
+	justify-content: space-around;
+	padding: 20px;
+	background-color: #f5f5f5;
 }
 
 .users-section,
 .friend-requests-section,
 .friends-list,
 .messaging-interface {
-  width: 30%;
+	width: 30%;
 }
 
 .users-section h1,
 .friend-requests-section button,
 .friends-list h2,
 .messaging-interface h2 {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .users-list {
-  list-style: none;
-  padding: 0;
+	list-style: none;
+	padding: 0;
 }
 
 .user-item,
 .friend-item {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  margin-bottom: 10px;
-  background-color: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	margin-bottom: 10px;
+	background-color: #fff;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s;
 }
 
 .user-item:hover,
 .friend-item:hover {
-  background-color: #f0f0f0; /* Light gray background color on hover */
+	background-color: #f0f0f0;
 }
 
 .user-item .username,
 .friend-username {
-  margin-right: 10px;
+	margin-right: 10px;
 }
 
 .user-profile-picture,
 .friend-profile-picture {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 10px;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin-right: 10px;
 }
 
 .friend-requests-dropdown {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin-top: 10px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+	margin-top: 10px;
 }
 
 .friend-requests-dropdown ul {
-  list-style-type: none;
-  padding: 0;
+	list-style-type: none;
+	padding: 0;
 }
 
 .friend-requests-dropdown li {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 5px;
 }
 
 .friend-requests-dropdown button {
-  background-color: #4caf50; /* Green background color */
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 5px;
+	background-color: #4caf50;
+	color: white;
+	padding: 5px 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-left: 5px;
 }
 
 .friend-requests-dropdown button:hover {
-  background-color: #45a049; /* Dark green background color on hover */
+	background-color: #45a049;
 }
 
 .messages-display {
-  max-height: 200px;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+	max-height: 200px;
+	overflow-y: auto;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 10px;
 }
 
 .messaging-interface input {
-  width: 70%;
-  padding: 8px;
-  margin-right: 5px;
+	width: 70%;
+	padding: 8px;
+	margin-right: 5px;
 }
 
 .messaging-interface button {
-  width: 25%;
-  background-color: #3498db; /* Blue background color */
-  color: white;
-  padding: 8px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+	width: 25%;
+	background-color: #3498db;
+	color: white;
+	padding: 8px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
 .messaging-interface button:hover {
-  background-color: #2980b9; /* Dark blue background color on hover */
+	background-color: #2980b9;
 }

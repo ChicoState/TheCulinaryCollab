@@ -6,6 +6,8 @@ const AddRecipeModal = ({ isOpen, onClose, addRecipe }) => {
 	const timingRef = useRef();
 	const tasteRef = useRef();
 	const preparationRef = useRef();
+	const costRef = useRef();
+	const timeToMakeRef = useRef();
 	const [ingredients, setIngredients] = useState([{ ingredient: '', amount: '', unit: '' }]);
 	const [visibility, setVisibility] = useState('private');
 	const handleAddIngredient = () => {
@@ -33,7 +35,8 @@ const AddRecipeModal = ({ isOpen, onClose, addRecipe }) => {
 			taste: tasteRef.current.value,
 			ingredients: ingredientsArray,
 			preparation: preparationRef.current.value,
-			visibility: visibility,
+			cost: costRef.current.value,
+			timeToMake: timeToMakeRef.current.value,
 		};
 
 		addRecipe(recipeData);
@@ -42,7 +45,8 @@ const AddRecipeModal = ({ isOpen, onClose, addRecipe }) => {
 		tasteRef.current.value = '';
 		preparationRef.current.value = '';
 		setIngredients([{ ingredient: '', amount: '', unit: '' }]);
-
+		costRef.current.value = '';
+		timeToMakeRef.current.value = '';
 		onClose();
 	};
 
@@ -93,7 +97,11 @@ const AddRecipeModal = ({ isOpen, onClose, addRecipe }) => {
 
 		<label>Preparation</label>
 		<textarea rows="4" ref={preparationRef} required />
+		<label>Cost</label>
+		<input type="text" ref={costRef} />
 
+		<label>Time to Make</label>
+		<input type="text" ref={timeToMakeRef} />
 		<div className="button-row">
 		<div className="back-button">
 		<button type="button" onClick={onClose}>

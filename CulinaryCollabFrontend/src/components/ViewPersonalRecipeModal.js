@@ -27,6 +27,8 @@ const PersonalRecipeViewModal = ({ isOpen, onClose, recipe, onEdit, onDelete }) 
 		))}
 		</ul>
 		<p><strong>Preparation:</strong> {recipe.preparation}</p>
+		{recipe.cost && <p><strong>Cost:</strong> {recipe.cost}</p>}
+		{recipe.timeToMake && <p><strong>Time to Make:</strong> {recipe.timeToMake}</p>}
 		<button onClick={handleDeleteClick}>Delete</button>
 		<button onClick={onClose}>Close</button>
 		</div>

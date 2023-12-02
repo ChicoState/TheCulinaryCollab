@@ -1,37 +1,37 @@
 .recipes-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 10px;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	grid-gap: 10px;
 }
 
 .recipe-item {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
+	border: 1px solid #ddd;
+	padding: 10px;
+	text-align: center;
+	cursor: pointer;
 }
 
 .recipe-origin {
-    font-style: italic;
-    font-size: small;
+	font-style: italic;
+	font-size: small;
 }
 .common-button-style {
-    background-color: green;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    margin: 2px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
+	background-color: green;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	margin: 2px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s, color 0.3s;
 }
 
 .common-button-style:hover {
-    background-color: #005700;
-    color: #e0e0e0;
+	background-color: #005700;
+	color: #e0e0e0;
 }
 

@@ -1,7 +1,9 @@
+/* InventoryPage.css */
+
 .inventory-page {
-  max-width: 800px;
+  font-family: 'Arial', sans-serif;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 20px;
 }
 
 h2 {
@@ -9,17 +11,79 @@ h2 {
 }
 
 button {
-  background-color: #4caf50; 
+  background-color: #4CAF50;
   color: white;
-  padding: 8px 12px;
   border: none;
-  border-radius: 5px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 0;
   cursor: pointer;
-  margin-bottom: 10px;
 }
 
 button:hover {
-  background-color: #45a049; 
+  background-color: #45a049;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.recipe-finder {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.add-item-modal {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-modal-button {
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.close-modal-button:hover {
+  background-color: #999;
 }
 
 ul {
@@ -28,69 +92,6 @@ ul {
 }
 
 li {
-  margin-bottom: 10px;
-}
-
-
-.recipe-finder {
-  margin-top: 20px;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-button[type="button"] {
-  margin-right: 10px;
-}
-
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.add-item-modal {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.add-item-modal h2 {
-  margin-bottom: 15px;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.close-modal-button {
-  background-color: #e74c3c; 
-  color: white;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.close-modal-button:hover {
-  background-color: #c0392b; 
+  margin-bottom: 8px;
+  color: #333;
 }

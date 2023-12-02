@@ -7,8 +7,8 @@ const EditRecipeModal = ({ isOpen, onClose, updateRecipe, recipe}) => {
 	const [taste, setTaste] = useState('');
 	const [preparation, setPreparation] = useState('');
 	const [ingredients, setIngredients] = useState([{ ingredient: '', amount: '', unit: '' }]);
-	const [visibility, setVisibility] = useState('private');
-
+	const [cost, setCost] = useState('');
+	const [timeToMake, setTimeToMake] = useState('');
 	const handleAddIngredient = () => {
 		setIngredients([...ingredients, { ingredient: '', amount: '', unit: '' }]);
 	};
@@ -39,7 +39,8 @@ const handleSubmit = async (e) => {
         taste,
         ingredients: ingredients.filter(ing => ing.ingredient !== ''),
         preparation,
-        visibility,
+        cost,
+	timeToMake
     };
     await updateRecipe(updatedRecipeData);
 		setName('');
@@ -47,8 +48,8 @@ const handleSubmit = async (e) => {
 		setTaste('');
 		setPreparation('');
 		setIngredients([{ ingredient: '', amount: '', unit: '' }]);
-		setVisibility('private');
-		console.log("1111111111");
+		setCost('');
+		setTimeToMake('');
 		onClose();
 	};
 useEffect(() => {
@@ -58,7 +59,8 @@ useEffect(() => {
         setTaste(recipe.taste);
         setPreparation(recipe.preparation);
         setIngredients(recipe.ingredients || []);
-        setVisibility(recipe.visibility || 'private');
+	setCost(recipe.cost);
+	setTimeToMake(recipe.timeToMake);
     }
 }, [recipe]);
 
@@ -112,7 +114,11 @@ useEffect(() => {
 
 		<label>Preparation</label>
 		<textarea rows="4" value={preparation} onChange={(e) => setPreparation(e.target.value)} required />
+		<label>Cost</label>
+		<input type="text" value={cost} onChange={(e) => setCost(e.target.value)} />
 
+		<label>Time to Make</label>
+		<input type="text" value={timeToMake} onChange={(e) => setTimeToMake(e.target.value)} />
 		<div className="button-row">
 		<div className="back-button">
 		<button type="button" onClick={onClose}>

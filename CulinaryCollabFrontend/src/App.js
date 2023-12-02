@@ -13,24 +13,6 @@ import ProfilePage from './components/ProfilePage';
 import UserProfilePage from './components/UserProfilePage';
 import ChatPage from './components/ChatPage';
 function App() {
-<<<<<<< HEAD
-    return (
-        <Router>
-            <div className="App">
-                <Header pageTitle={""} /> {}
-                <Routes>
-	            <Route path="/" element={<LandingPage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/public-recipes" element={<PublicRecipesPage />} />
-                    <Route path="/workshop" element={<WorkshopPage />} />
-	            <Route path="/bar-help" element={<BarHelpPage />} />
-		    <Route path="/inventory-page" element={<InventoryPage />} />
-	    	    <Route path="/register" element={<RegisterPage />} />
-                </Routes>
-            </div>
-        </Router>
-    );
-=======
 	return (
 		<Router>
 		<div className="App">
@@ -38,7 +20,6 @@ function App() {
 		<Routes>
 		<Route path="/" element={<LandingPage />} />
 		<Route path="/login" element={<LoginPage />} />
-		<Route path="/about" element={<AboutPage />} />
 		<Route path="/public-recipes" element={<PublicRecipesPage />} />
 		<Route path="/workshop" element={<WorkshopPage />} />
 		<Route path="/browse" element={<BrowseRecipesPage />} />
@@ -52,7 +33,6 @@ function App() {
 		</div>
 		</Router>
 	);
->>>>>>> dc28d8d4054dc3e28b089697da021ca06cab8c70
 }
 
 export default App;

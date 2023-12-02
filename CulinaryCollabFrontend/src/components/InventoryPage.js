@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { doc, setDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { firestore } from '../firebase'; 
+import React, { useState } from 'react';
+import { firestore, storage, auth } from '../firebase';
 import './InventoryPage.css';
 
 const RecipeFinder = ({ inventory }) => {
@@ -8,43 +7,41 @@ const RecipeFinder = ({ inventory }) => {
     const [recipes, setRecipes] = useState([]);
     const [filteredRecipes, setFilteredRecipes] = useState([]);
 
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const recipesCollection = collection(firestore, 'public-recipes');
-                const snapshot = await getDocs(recipesCollection);
-                const recipesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                setRecipes(recipesData);
-                setFilteredRecipes(recipesData);
-            } catch (error) {
-                console.error('Error fetching recipes:', error);
-            }
-        };
-
-        fetchRecipes();
-    }, []);
-
     const handleIngredientsChange = (e) => {
         setIngredients(e.target.value);
     };
 
     const findRecipes = () => {
-        const matchingRecipes = recipes.filter(recipe =>
-            recipe.ingredients.some(ingredient => ingredients.includes(ingredient.ingredient))
+        const availableRecipes = [
+            { name: 'Recipe 1', ingredients: ['Ingredient A', 'Ingredient B'] },
+            { name: 'Recipe 2', ingredients: ['Ingredient B', 'Ingredient C'] },
+        ];
+
+        const matchingRecipes = availableRecipes.filter(recipe =>
+            recipe.ingredients.every(ingredient => ingredients.includes(ingredient))
         );
 
+        setRecipes(matchingRecipes);
         setFilteredRecipes(matchingRecipes);
     };
 
     const searchRecipes = () => {
         const matchingRecipes = recipes.filter(recipe =>
-            recipe.ingredients.some(ingredient => ingredients.includes(ingredient.ingredient))
+            recipe.ingredients.every(ingredient => ingredients.includes(ingredient))
         );
 
         setFilteredRecipes(matchingRecipes);
     };
 
-    return (
+	if (!auth.currentUser) {
+		return (
+			<div className="login-prompt">
+			<h1>Please Log In</h1>
+			<p>To access this page, you need to be logged in.</p>
+			</div>
+		);
+	}
+	return (
         <div className="recipe-finder">
             <h2>Find Recipes</h2>
             <div className="form-group">
@@ -124,23 +121,12 @@ const SampleInventory = [
     { name: 'Lime Juice', quantity: '1 bottle', category: 'Juices' },
 ];
 
-const InventoryPage = ({ location }) => {
+const InventoryPage = () => {
     const [inventory, setInventory] = useState(SampleInventory);
     const [isAddItemModalOpen, setAddItemModalOpen] = useState(false);
-    const userId = location.state?.userId || 'default-user-id';
-	
-    const addItem = async (item) => {
-        try {
-            const inventoryRef = collection(firestore, `users/${userId}/inventory`);
 
-            // Add the item to the "inventory" collection
-            await setDoc(doc(inventoryRef, item.name), item);
-
-            // Update the local state with the new item
-            setInventory([...inventory, item]);
-        } catch (error) {
-            console.error('Error adding item to inventory:', error);
-        }
+    const addItem = (item) => {
+        setInventory([...inventory, item]);
     };
 
     const openAddItemModal = () => {
@@ -155,11 +141,9 @@ const InventoryPage = ({ location }) => {
         <div className="inventory-page">
             <h2>Inventory</h2>
             <button onClick={openAddItemModal}>Add Item</button>
-            <ul>
-                {inventory.map((item, index) => (
+            <ul>{inventory.map((item, index) => (
                     <li key={index}>{item.name} - {item.quantity} - {item.category}</li>
-                ))}
-            </ul>
+                ))}</ul>
             <RecipeFinder inventory={inventory} />
             {isAddItemModalOpen && (
                 <AddItemModal addItem={addItem} closeModal={closeAddItemModal} />

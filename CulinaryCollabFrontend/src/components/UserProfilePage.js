@@ -9,7 +9,7 @@ const UserProfilePage = () => {
 	const [originalUsername, setOriginalUsername] = useState('');
 	const { uid } = useParams();
 	const navigate = useNavigate();
-	const [userProfile, setUserProfile] = useState(null);
+	const [userProfile, setUserProfile] = useState(null); 
 	const [profilePic, setProfilePic] = useState('');
 	const [personalRecipes, setPersonalRecipes] = useState([]);
 	const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -169,15 +169,36 @@ const UserProfilePage = () => {
 		try {
 			const savedRecipesRef = collection(firestore, `users/${user.uid}/savedRecipes`);
 			await addDoc(savedRecipesRef, extendedRecipeData);
-			console.log('Recipe saved successfully');
+			alert('Recipe saved successfully!');
 		} catch (error) {
-			console.error('Error saving recipe: ', error);
+			alert('Error saving recipe: ', error);
 		}
 	};
 
 	if (!userProfile) {
 		return <div>Loading...</div>;
 	}
+
+	// Remove friend from friends list
+	const handleRemoveFriend = async (friendId) => {
+		if (!auth.currentUser) {
+			alert("No user logged in");
+			return;
+		}
+
+		const currentUserRef = doc(firestore, 'users', auth.currentUser.uid);
+		try {
+			await updateDoc(currentUserRef, {
+				friendsList: arrayUnion(friendId)
+			});
+		} catch (error) {
+			console.error("Error removing friend:  ", error);
+			alert("Failed to remove friend.");
+			return;
+		}
+
+	};
+
 
 	return (
 		<div className="user-profile-page">
@@ -189,6 +210,8 @@ const UserProfilePage = () => {
 		<div className="user-action-buttons">
 		<button className="back-button" onClick={() => navigate('/social')}>Back to Social Page</button>
 		<button className="send-friend-request" onClick={() => handleSendFriendRequest(uid)}>Send Friend Request</button>
+		{userProfile.friendsList && userProfile.friendsList.includes(auth.currentUser?.uid) && 
+		<button className="remove-friend" onClick={() => handleRemoveFriend(uid)}>Remove Friend</button>}
 		</div>
 
 		{/* Grid display for recipes */}

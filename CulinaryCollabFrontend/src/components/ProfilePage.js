@@ -109,9 +109,13 @@ const ProfilePage = () => {
 			setUploading(false);
 		}
 	};
-
-	if (!user) {
-		return <div>Please log in to view this page.</div>;
+	if (!auth.currentUser) {
+		return (
+			<div className="login-prompt">
+			<h1>Please Log In</h1>
+			<p>To access this page, you need to be logged in.</p>
+			</div>
+		);
 	}
 	return (
 		<div className="profile-container">

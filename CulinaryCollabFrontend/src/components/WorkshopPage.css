@@ -29,6 +29,7 @@
 h2 {
 	font-size: 24px;
 	margin-bottom: 20px;
+	text-align: center;
 }
 
 .recipe-list {
@@ -60,6 +61,7 @@ h2 {
 }
 
 .collection-box {
+	max-width:95vw;
 	border: 1px solid #ccc;
 	border-radius: 10px;
 	padding: 10px;
@@ -69,6 +71,32 @@ h2 {
 	justify-content: center;
 	align-items: center;
 	min-height: 10px;
+	width: 95%;
+}
+
+.content-area {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: column;
+	margin: 20px 0;
+}
+
+.recipes-display {
+	width: 75%;
+}
+
+.trash-box {
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 20px;
+	background-color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	width: 95%;
 }
 

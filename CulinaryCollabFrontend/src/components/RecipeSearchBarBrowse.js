@@ -11,23 +11,28 @@ const RecipeSearchBarBrowse = ({ recipes, onView }) => {
 			handleSearch(term);
 		}
 	};
+
 	const handleSearch = (e) => {
 		if (e.length <= 1) {
 			setSearchResults([]);
 			return;
-		}
-		else {
+		} else {
 			const lowercasedTerm = searchTerm.toLowerCase();
-			const filtered = recipes.filter(
-				(recipe) =>
-				(recipe.name && recipe.name.toLowerCase().includes(lowercasedTerm)) ||
-				(recipe.ingredients &&
-					recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(lowercasedTerm)))
-			);
-			console.log(searchTerm);
+			const filtered = recipes.filter((recipe) => {
+				const recipeNameMatches = recipe.name && recipe.name.toLowerCase().includes(lowercasedTerm);
+				const ingredientMatches = recipe.ingredients && recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(lowercasedTerm));
+				const createdByMatches = recipe.createdBy && recipe.createdBy.username && recipe.createdBy.username.toLowerCase().includes(lowercasedTerm);
+				return recipeNameMatches || ingredientMatches || createdByMatches;
+			});
 			setSearchResults(filtered);
 		}
 	};
+	const getRecipeCreator = (recipe) => {
+		return recipe.createdBy && recipe.createdBy.username
+			? `Created by ${recipe.createdBy.username}`
+			: "Public Recipe";
+	};
+
 	return (
 		<div>
 		<div className="search-bar-container">
@@ -45,10 +50,13 @@ const RecipeSearchBarBrowse = ({ recipes, onView }) => {
 			<li key={index} className="search-result-item">
 			{recipe.name}
 			<button onClick={() => onView(recipe)} className="view-recipe-button">View</button>
+			<span className="recipe-creator"> {getRecipeCreator(recipe)}</span> 
 			</li>
 		))}
 		</ul>
 		</div>
 	);
 };
+
 export default RecipeSearchBarBrowse;
+

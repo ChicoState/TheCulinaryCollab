@@ -30,7 +30,6 @@ const LoginPage = () => {
 
 		try {
 			await signInWithEmailAndPassword(auth, loginInput, password);
-			alert('Success!');
 			navigate('/workshop');
 		} catch (error) {
 			alert('Incorrect password');
