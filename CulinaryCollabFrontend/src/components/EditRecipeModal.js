@@ -71,14 +71,14 @@ useEffect(() => {
 		
 		<div className="modal-content">
 		<form onSubmit={handleSubmit}>
-		<label>Name</label>
-		<input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+		<label htmlFor='name'>Name</label>
+		<input type="text" id='name' value={name} onChange={(e) => setName(e.target.value)} required />
 
-		<label>Timing</label>
-		<input type="text" value={timing} onChange={(e) => setTiming(e.target.value)} required />
+		<label htmlFor='timing'>Timing</label>
+		<input type="text" id='timing' value={timing} onChange={(e) => setTiming(e.target.value)} required />
 
-		<label>Taste</label>
-		<input type="text" value={taste} onChange={(e) => setTaste(e.target.value)} required />
+		<label htmlFor='taste'>Taste</label>
+		<input type="text" id='taste' value={taste} onChange={(e) => setTaste(e.target.value)} required />
 
 		<label>Ingredients</label>
 		{ingredients.map((ingredient, index) => (
@@ -112,13 +112,13 @@ useEffect(() => {
 		Add Ingredient
 		</button>
 
-		<label>Preparation</label>
-		<textarea rows="4" value={preparation} onChange={(e) => setPreparation(e.target.value)} required />
-		<label>Cost</label>
-		<input type="text" value={cost} onChange={(e) => setCost(e.target.value)} />
+		<label htmlFor='preparation'>Preparation</label>
+		<textarea rows="4" id='preparation' value={preparation} onChange={(e) => setPreparation(e.target.value)} required />
+		<label htmlFor='cost'>Cost</label>
+		<input type="text" id='cost' value={cost} onChange={(e) => setCost(e.target.value)} />
 
-		<label>Time to Make</label>
-		<input type="text" value={timeToMake} onChange={(e) => setTimeToMake(e.target.value)} />
+		<label htmlFor='timeToMake'>Time to Make</label>
+		<input type="text" id='timeToMake' value={timeToMake} onChange={(e) => setTimeToMake(e.target.value)} />
 		<div className="button-row">
 		<div className="back-button">
 		<button type="button" onClick={onClose}>

@@ -54,11 +54,11 @@ const AddRecipeModal = ({ isOpen, onClose, addRecipe }) => {
 		<div className={`modal ${isOpen ? 'open' : ''}`}>
 		<div className="modal-content">
 		<form onSubmit={handleSubmit}>
-		<label>Name</label>
-		<input type="text" ref={nameRef} required />
+		<label htmlFor='nameRef'>Name</label>
+		<input type="text" id='nameRef' ref={nameRef} required />
 
-		<label>Timing</label>
-		<input type="text" ref={timingRef} required />
+		<label htmlFor='timingRef'>Timing</label>
+		<input type="text" id='timingRef' ref={timingRef} required />
 
 		<label>Taste</label>
 		<input type="text" ref={tasteRef} required />
@@ -97,8 +97,8 @@ const AddRecipeModal = ({ isOpen, onClose, addRecipe }) => {
 
 		<label>Preparation</label>
 		<textarea rows="4" ref={preparationRef} required />
-		<label>Cost</label>
-		<input type="text" ref={costRef} />
+		<label htmlFor='preparationRef'>Cost</label>
+		<input type="text" id='preparationRef' ref={costRef} />
 
 		<label>Time to Make</label>
 		<input type="text" ref={timeToMakeRef} />
