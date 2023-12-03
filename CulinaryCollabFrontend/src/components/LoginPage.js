@@ -4,10 +4,12 @@ import { auth, firestore } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
+import background from "./Champagne.jpg";
 const LoginPage = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const navigate = useNavigate();
+
 	const handleLogin = async () => {
 		let loginInput = email.toLowerCase();
 
@@ -23,7 +25,7 @@ const LoginPage = () => {
 					return;
 				}
 			} catch (error) {
-				alert('Error fetching username: ', error);
+				console.error('Error fetching username: ', error);
 				return;
 			}
 		}
@@ -36,7 +38,7 @@ const LoginPage = () => {
 		}
 	};
 	return (
-		<div className="login-container">
+		<div className="login-container" style={{backgroundImage: `url(${background})`}}>
 		<div className="login-form">
 		<input 
 		type="email" 
