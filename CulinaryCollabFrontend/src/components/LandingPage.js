@@ -1,7 +1,9 @@
 import React from 'react';
+import {motion as m } from "framer-motion";
 
 function LandingPage() {
 	return (
+		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
 		<div className="landing-page-container">
 		<div className="landing-content">
 		{}
@@ -13,6 +15,7 @@ function LandingPage() {
             		</div>
         	</div>
 		</div>
+		</m.div>
 	);
 }
 
