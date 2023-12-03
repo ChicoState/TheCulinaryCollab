@@ -5,6 +5,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 import background from "./Champagne.jpg";
+import {motion as m } from "framer-motion";
 const LoginPage = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -38,6 +39,7 @@ const LoginPage = () => {
 		}
 	};
 	return (
+		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
 		<div className="login-container" style={{backgroundImage: `url(${background})`}}>
 		<div className="login-form">
 		<input 
@@ -58,6 +60,7 @@ const LoginPage = () => {
 		<button className="common-button-style" onClick={() => navigate('/register')}>Create Account</button>
 		</div>
 		</div>
+		</m.div>
 	);
 };
 
