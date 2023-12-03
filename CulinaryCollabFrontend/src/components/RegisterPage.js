@@ -4,6 +4,7 @@ import {sendEmailVerification } from "firebase/auth";
 import { auth, firestore } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import {motion as m } from "framer-motion";
 import './RegisterPage.css';
 import background from "./Champagne.jpg";
 const RegisterPage = () => {
@@ -83,6 +84,7 @@ const RegisterPage = () => {
 	
 
 	return (
+		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
 		<div className="register-page-container" style={{backgroundImage: `url(${background})`}}>
 			<div className="register-page">
 				<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
@@ -92,6 +94,7 @@ const RegisterPage = () => {
 				<button className="common-button-style" onClick={() => navigate('/login')}>Back to Login</button>
 			</div>
 		</div>
+		</m.div>
 	);
 };
 
