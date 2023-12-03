@@ -52,7 +52,7 @@ return (
                     }}>
                     Socials
                 </button>
-                <div className={`dropdown-content ${showSocialsDropdown ? 'show' : ''}`}>
+                <div className={`dropdown-content ${showSocialsDropdown ? 'show' : 'show'}`}>
                     <Link to="/profile">My Profile</Link>
                     <Link to="/social">Social</Link>
                 </div>
@@ -66,7 +66,7 @@ return (
                     }}>
                     Drinks
                 </button>
-                <div className={`dropdown-content ${showDrinksDropdown ? 'show' : ''}`}>
+                <div className={`dropdown-content ${showDrinksDropdown ? 'show' : 'show'}`}>
                     <Link to="/workshop">My drinks</Link>
                     <Link to="/browse">Browse</Link>
                     <Link to="/inventory-page">Inventory Page</Link>
