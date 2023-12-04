@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import RegisterPage from './RegisterPage';
 
 const WaitingPage = () => {
   const navigate = useNavigate();
@@ -13,12 +14,12 @@ const WaitingPage = () => {
             await user.reload();
             if (user.emailVerified) {
               // Email verified, navigate to the desired page
-              navigate('/workshop');
+                        navigate('/workshop');
             }
           }
         });
       } catch (error) {
-        console.error('Error checking email verification: ', error);
+        alert('Error checking email verification: ', error);
       }
     };
 
@@ -29,7 +30,6 @@ const WaitingPage = () => {
   return (
     <div>
       <h2>Please wait while we verify your email...</h2>
-      {/* You can add a loader or any other waiting UI here */}
     </div>
   );
 };

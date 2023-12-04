@@ -5,7 +5,9 @@ import { auth, firestore } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './RegisterPage.css';
+import './WaitingPage.css';
 import WaitingPage from './WaitingPage';
+
 const RegisterPage = () => {
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
@@ -53,7 +55,7 @@ const RegisterPage = () => {
 		try {
 			const userCredential = await createUserWithEmailAndPassword(auth, lowerCaseEmail, password);
 			await sendEmailVerification(auth.currentUser);
-			navigate('/waiting');
+			navigate('/WaitingPage');
 			await setDoc(doc(firestore, 'users', userCredential.user.uid), { username: lowerCaseUsername, originalUsername: username, email: lowerCaseEmail });	
 			await setDoc(doc(firestore, 'usernames', lowerCaseUsername), { email: lowerCaseEmail });
 			await setDoc(doc(firestore, `users/${userCredential.user.uid}/personalRecipes`, 'initial'), {});
@@ -67,9 +69,6 @@ const RegisterPage = () => {
 				friendRequests: [],
 				friendsList: []
 			});
-			
-				.then(() => {
-			  });
 			navigate('/workshop');
 		} catch (error) {
 			console.error('Error during registration: ', error);
