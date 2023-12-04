@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { firestore, storage, auth } from '../firebase';
+import {motion as m } from "framer-motion";
 import './InventoryPage.css';
 
 const RecipeFinder = ({ inventory }) => {
@@ -138,6 +139,7 @@ const InventoryPage = () => {
     };
 
     return (
+	<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
         <div className="inventory-page">
             <h2>Inventory</h2>
             <button onClick={openAddItemModal}>Add Item</button>
@@ -149,6 +151,7 @@ const InventoryPage = () => {
                 <AddItemModal addItem={addItem} closeModal={closeAddItemModal} />
             )}
         </div>
+	</m.div>
     );
 };
 
