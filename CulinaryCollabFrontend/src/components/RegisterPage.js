@@ -6,13 +6,9 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import {motion as m } from "framer-motion";
 import './RegisterPage.css';
-<<<<<<< HEAD
 import './WaitingPage.css';
 import WaitingPage from './WaitingPage';
-
-=======
 import background from "./Champagne.jpg";
->>>>>>> 6428351f1804e94854f3e325fc36d213fad47eef
 const RegisterPage = () => {
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
