@@ -29,7 +29,9 @@ const BrowseRecipesPage = () => {
 	};
 
 	const canSaveRecipe = (recipe) => {
-		return !recipe.createdBy || (recipe.createdBy.email !== currentUserEmail);
+		const isUserLoggedIn = auth.currentUser !== null;
+		const isEmailVerified = isUserLoggedIn ? auth.currentUser.emailVerified : false;
+		return isUserLoggedIn && isEmailVerified && (!recipe.createdBy || (recipe.createdBy.email !== currentUserEmail));
 	};
 
 	const displayedRecipes = recipes.slice(currentPage * recipesPerPage, (currentPage + 1) * recipesPerPage);

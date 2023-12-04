@@ -53,25 +53,24 @@ const RegisterPage = () => {
 			return;
 		}
 
-		try {
-			const userCredential = await createUserWithEmailAndPassword(auth, lowerCaseEmail, password);
-			await sendEmailVerification(auth.currentUser);
-			navigate('/WaitingPage');
-			await setDoc(doc(firestore, 'users', userCredential.user.uid), { username: lowerCaseUsername, originalUsername: username, email: lowerCaseEmail });	
-			await setDoc(doc(firestore, 'usernames', lowerCaseUsername), { email: lowerCaseEmail });
-			await setDoc(doc(firestore, `users/${userCredential.user.uid}/personalRecipes`, 'initial'), {});
-			await setDoc(doc(firestore, `users/${userCredential.user.uid}/savedRecipes`, 'initial'), {});
-			await setDoc(doc(firestore, `users/${userCredential.user.uid}/inventory`, 'initial'), {});
-			await setDoc(doc(firestore, `users/${userCredential.user.uid}/Profile-display`, 'initial'), {});
-			await setDoc(doc(firestore, 'users', userCredential.user.uid), {
-				username: lowerCaseUsername,
-				originalUsername: username,
-				email: lowerCaseEmail,
-				friendRequests: [],
-				friendsList: []
-			});
-			navigate('/workshop');
-		} catch (error) {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await sendEmailVerification(auth.currentUser);
+
+            // Create user data immediately after registration
+            const userId = userCredential.user.uid;
+            const userData = {
+                username: username.toLowerCase(),
+                originalUsername: username,
+                email: email.toLowerCase(),
+                friendRequests: [],
+                friendsList: []
+            };
+            await setDoc(doc(firestore, 'users', userId), userData);
+            await setDoc(doc(firestore, 'usernames', username.toLowerCase()), { email: email.toLowerCase() });
+            
+            navigate('/WaitingPage');
+	} catch (error) {
 			console.error('Error during registration: ', error);
 			if (error.code === 'auth/invalid-email') {
 				alert('The email address is not valid. Please enter a valid email address.');

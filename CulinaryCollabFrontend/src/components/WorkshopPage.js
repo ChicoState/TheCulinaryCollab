@@ -395,6 +395,14 @@ const WorkshopPage = () => {
 			</div>
 		);
 	};
+	if (auth.currentUser && !auth.currentUser.emailVerified) {
+		return (
+			<div className="verify-prompt">
+			<h1>Please Verify Your account</h1>
+			<p> Check your email for a verification email to use the website, or reload the page if you have!</p>
+			</div>
+		);
+	}
 	if (!auth.currentUser) {
 		return (
 			<div className="login-prompt">
