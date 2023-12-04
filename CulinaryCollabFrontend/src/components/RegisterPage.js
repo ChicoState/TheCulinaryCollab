@@ -4,10 +4,15 @@ import {sendEmailVerification } from "firebase/auth";
 import { auth, firestore } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import {motion as m } from "framer-motion";
 import './RegisterPage.css';
+<<<<<<< HEAD
 import './WaitingPage.css';
 import WaitingPage from './WaitingPage';
 
+=======
+import background from "./Champagne.jpg";
+>>>>>>> 6428351f1804e94854f3e325fc36d213fad47eef
 const RegisterPage = () => {
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
@@ -83,13 +88,17 @@ const RegisterPage = () => {
 	
 
 	return (
-		<div className="register-page">
-		<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-		<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-		<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-		<button className="common-button-style" onClick={handleRegister}>Register</button>
-		<button className="common-button-style" onClick={() => navigate('/login')}>Back to Login</button>
+		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
+		<div className="register-page-container" style={{backgroundImage: `url(${background})`}}>
+			<div className="register-page">
+				<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
+				<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+				<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+				<button className="common-button-style" onClick={handleRegister}>Register</button>
+				<button className="common-button-style" onClick={() => navigate('/login')}>Back to Login</button>
+			</div>
 		</div>
+		</m.div>
 	);
 };
 
