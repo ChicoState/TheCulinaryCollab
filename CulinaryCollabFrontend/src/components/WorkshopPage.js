@@ -12,6 +12,7 @@ import EditRecipeModal from './EditRecipeModal';
 import ViewPersonalRecipeModal from './ViewPersonalRecipeModal';
 import ViewSavedRecipeModal from './ViewSavedRecipeModal';
 import RecipeItem from './RecipeItem';
+import {motion as m } from "framer-motion";
 const WorkshopPage = () => {
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 	const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -405,6 +406,7 @@ const WorkshopPage = () => {
 	}
 	return (
 		<DndProvider backend={HTML5Backend}>
+		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
 		<div className="landing-page">
 		<h1>Welcome {originalUsername}</h1>
 		<RecipeSearchBar
@@ -463,6 +465,7 @@ const WorkshopPage = () => {
 		</div>
 
 		</div>
+		</m.div>
 		</DndProvider>
 	);
 };
