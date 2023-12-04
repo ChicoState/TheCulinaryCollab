@@ -1,6 +1,7 @@
 import React, { useState} from 'react';
 import '../components/PublicRecipesPage.css';
 import RecipeStack from './RecipeStack';
+import {motion as m } from "framer-motion";
 
 const cocktails = [
 	{
@@ -231,6 +232,7 @@ const PublicRecipesPage = () => {
 
 
 	return (
+		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
 		<div className="recipe-page-container">
 		{}
 		<div className="search-results-container">
@@ -284,6 +286,7 @@ const PublicRecipesPage = () => {
 		recipes={newCocktails}
 		/>
 		</div>
+		</m.div>
 	);
 };
 export default PublicRecipesPage;
