@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { auth, firestore, storage } from '../firebase';
 import { doc, getDoc, updateDoc, collection, getDocs } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import {motion as m } from "framer-motion";
 import './ProfilePage.css';
 const defaultProfilePic = 'https://firebasestorage.googleapis.com/v0/b/culinarycollab.appspot.com/o/profilePictures%2FD.png?alt=media&token=a23fae95-8ed6-4c3f-81da-9a49e92aa543';
 
@@ -118,6 +119,7 @@ const ProfilePage = () => {
 		);
 	}
 	return (
+		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
 		<div className="profile-container">
 		<img
 		src={profilePic || defaultProfilePic}
@@ -168,6 +170,7 @@ const ProfilePage = () => {
 
 		{renderPaginationButtons()}
 		</div>
+		</m.div>
 	);
 };
 
