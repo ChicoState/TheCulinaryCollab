@@ -38,7 +38,7 @@ const RecipeFinder = ({ inventory }) => {
 		return (
 			<div className="verify-prompt">
 			<h1>Please Verify Your account</h1>
-			<p> Check your email for a verification email to use the website, or reload the page if you have!</p>
+			<p> Check your email for a verification email to use the website, or reload the page if you have! If you need to resend the email see your profile page.</p>
 			</div>
 		);
 	}
