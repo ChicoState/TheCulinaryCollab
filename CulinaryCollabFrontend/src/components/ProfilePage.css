@@ -58,4 +58,10 @@
 .profile-picture:hover {
 	opacity: 0.7;
 }
+.resend-email-container {
+    text-align: center;
+    padding: 10px;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+}
 

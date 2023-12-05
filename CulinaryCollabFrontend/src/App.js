@@ -12,6 +12,7 @@ import SocialPage from './components/SocialPage';
 import ProfilePage from './components/ProfilePage';
 import UserProfilePage from './components/UserProfilePage';
 import ChatPage from './components/ChatPage';
+import WaitingPage from './components/WaitingPage';
 function App() {
 	return (
 		<Router>
@@ -29,6 +30,7 @@ function App() {
 		<Route path="/profile" element={<ProfilePage />} />
 		<Route path="/user/:uid" element={<UserProfilePage />} />
 		<Route path="/chat/:friendId" element={<ChatPage />} />
+		<Route path="/WaitingPage" element={<WaitingPage />} />
 		</Routes>
 		</div>
 		</Router>

@@ -1,37 +1,34 @@
-import React, { useEffect } from 'react';
-import { auth } from '../firebase';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import RegisterPage from './RegisterPage';
+import { auth } from '../firebase';
 
 const WaitingPage = () => {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const [isEmailVerified, setIsEmailVerified] = useState(false);
 
-  useEffect(() => {
-    const checkEmailVerification = async () => {
-      try {
-        await auth.onAuthStateChanged(async (user) => {
-          if (user) {
-            await user.reload();
-            if (user.emailVerified) {
-              // Email verified, navigate to the desired page
-                        navigate('/workshop');
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            await auth.currentUser.reload();
+            if (auth.currentUser.emailVerified) {
+                setIsEmailVerified(true);
             }
-          }
-        });
-      } catch (error) {
-        alert('Error checking email verification: ', error);
-      }
-    };
+        }, 3000);
 
-    const interval = setInterval(checkEmailVerification, 3000); // Check every 3 seconds
-    return () => clearInterval(interval);
-  }, [navigate]);
+        return () => clearInterval(interval);
+    }, []);
 
-  return (
-    <div>
-      <h2>Please wait while we verify your email...</h2>
-    </div>
-  );
+    useEffect(() => {
+        if (isEmailVerified) {
+            navigate('/workshop');
+        }
+    }, [isEmailVerified, navigate]);
+
+    return (
+        <div>
+            <h2>Please wait while we verify your email...</h2>
+        </div>
+    );
 };
 
 export default WaitingPage;
+

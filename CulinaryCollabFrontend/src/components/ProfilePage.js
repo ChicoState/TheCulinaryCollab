@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { auth, firestore, storage } from '../firebase';
 import { doc, getDoc, updateDoc, collection, getDocs } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { sendEmailVerification }  from 'firebase/auth';
 import {motion as m } from "framer-motion";
 import './ProfilePage.css';
 const defaultProfilePic = 'https://firebasestorage.googleapis.com/v0/b/culinarycollab.appspot.com/o/profilePictures%2FD.png?alt=media&token=a23fae95-8ed6-4c3f-81da-9a49e92aa543';
@@ -27,6 +28,17 @@ const ProfilePage = () => {
 			setIsEditing(false);
 		} catch (error) {
 			console.error('Error saving bio: ', error);
+		}
+	};
+	const resendVerificationEmail = async () => {
+		if (user && !user.emailVerified) {
+			try {
+				await sendEmailVerification(user);
+				alert("Verification email sent!");
+			} catch (error) {
+				console.error("Error sending verification email: ", error);
+				alert("Error sending verification email. Please try again later.");
+			}
 		}
 	};
 	useEffect(() => {
@@ -121,6 +133,13 @@ const ProfilePage = () => {
 	return (
 		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
 		<div className="profile-container">
+		{!user.emailVerified && (
+			<div className="resend-email-container">
+			<button onClick={resendVerificationEmail}>
+			Resend Verification Email
+			</button>
+			</div>
+		)}
 		<img
 		src={profilePic || defaultProfilePic}
 		alt="Profile"
