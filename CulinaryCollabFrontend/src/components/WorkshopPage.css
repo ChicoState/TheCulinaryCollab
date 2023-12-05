@@ -37,11 +37,11 @@ h2 {
 	width: 100%;
 	padding: 2px;
 	border-radius: 10px;
-	background-color: #f7f7f7;
+	/*background-color: #f7f7f7;*/
 }
 
 .recipe-scroll {
-	min-height: 80px;
+	min-height: 130px;
 	display: flex;
 	overflow-x: auto;
 	overflow-y: hidden;
@@ -81,13 +81,13 @@ h1, h2 {
     border-radius: 5px;
 }
 .collection-box {
-	min-height: 80px;
+	min-height: 100px;
 	max-width:95vw;
 	border: 1px solid #ccc;
-	border-radius: 10px;
+	border-radius: 30px;
 	padding: 10px;
 	margin-bottom: 20px;
-	background-color: rgba(255, 255, 255, 0.9);
+	background-color: rgba(255, 255, 255, 1);
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	display: flex;
 	justify-content: center;
