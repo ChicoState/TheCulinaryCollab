@@ -13,6 +13,7 @@ import ViewPersonalRecipeModal from './ViewPersonalRecipeModal';
 import ViewSavedRecipeModal from './ViewSavedRecipeModal';
 import RecipeItem from './RecipeItem';
 import {motion as m } from "framer-motion";
+import background from "./Workshop-background.png";
 const WorkshopPage = () => {
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 	const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -392,7 +393,7 @@ const WorkshopPage = () => {
 
 		return (
 			<div ref={drop} className="trash-box">
-			<p>Delete Recipe from public Workshop</p>
+			<p>Drag a Recipe to Delete Recipe from public Workshop</p>
 			</div>
 		);
 	};
@@ -415,7 +416,7 @@ const WorkshopPage = () => {
 	return (
 		<DndProvider backend={HTML5Backend}>
 		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
-		<div className="landing-page">
+		<div className="landing-page" style={{backgroundImage: `url(${background})`}}>
 		<h1>Welcome {originalUsername}</h1>
 		<RecipeSearchBar
 		publicRecipes={publicRecipes}

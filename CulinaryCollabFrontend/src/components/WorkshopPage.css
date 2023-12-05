@@ -1,3 +1,4 @@
+
 .ingredient-input {
 	display: flex;
 	align-items: center;
@@ -34,12 +35,13 @@ h2 {
 
 .recipe-list {
 	width: 100%;
-	padding: 10px;
+	padding: 2px;
 	border-radius: 10px;
 	background-color: #f7f7f7;
 }
 
 .recipe-scroll {
+	min-height: 80px;
 	display: flex;
 	overflow-x: auto;
 	overflow-y: hidden;
@@ -47,30 +49,49 @@ h2 {
 	padding-bottom: 15px;
 }
 
-.recipe-item {
+body {
+	font-family: 'Roboto', sans-serif;
+}
+.recipe-item {	
 	flex: 0 0 auto;
-	margin-right: 15px;
+	margin: 10px;
 	border: 1px solid #ccc;
-	padding: 10px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left:10px;
+	border: 3px solid #ccc;
 	border-radius: 5px;
-	background-color: white;
+	background-color: #fdfdfd;
+	color: #333;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .recipe-item:hover {
 	background-color: #e0e0e0;
 }
 
+h1, h2 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    color: #333;
+}
+.title-background {
+    background-color: rgba(255, 255, 255, 0.7);
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
 .collection-box {
+	min-height: 80px;
 	max-width:95vw;
 	border: 1px solid #ccc;
 	border-radius: 10px;
 	padding: 10px;
 	margin-bottom: 20px;
-	background-color: #fff;
+	background-color: rgba(255, 255, 255, 0.9);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 10px;
 	width: 95%;
 }
 

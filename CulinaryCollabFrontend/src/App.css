@@ -1,25 +1,4 @@
 .App {
     text-align: center;
 }
-/*.about-button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.about-button {
-    background-color: gray;
-    color: white;
-    border: none;
-    padding: 5px 15px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    border-radius: 5px;
-}
-
-.about-button:hover {
-    background-color: darkgray;
-}
 

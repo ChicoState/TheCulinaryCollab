@@ -4,6 +4,7 @@ import { firestore, auth } from '../firebase';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import RecipeSearchBarBrowse from './RecipeSearchBarBrowse';
 import ViewRecipeModal from './ViewRecipeModal';
+import background from "./Browse-background.png";
 const user = auth.currentUser;
 const BrowseRecipesPage = () => {
 	const [recipes, setRecipes] = useState([]);
@@ -81,7 +82,7 @@ const BrowseRecipesPage = () => {
 	}, []);
 
 	return (
-		<div className="browse-recipes-page">
+		<div className="browse-recipes-page" style={{backgroundImage: `url(${background})`}}>
 		<h2>Browse Recipes</h2>
 		<RecipeSearchBarBrowse recipes={recipes} onView={openViewModal} onSave={() => saveRecipe(selectedRecipe)} />
 		<div className="recipes-grid">
