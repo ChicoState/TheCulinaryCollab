@@ -4,6 +4,7 @@
     align-items: center;
     padding: 1rem;
     background-color: #E0E8F5;
+    position: relative;
 }
 
 .logo-container {
@@ -27,6 +28,8 @@
 .navigation {
     display: flex;
     gap: 1rem;
+    position: absolute;
+    right:3%;
 }
 
 .navigation button {
@@ -57,7 +60,7 @@
   z-index: 1;
   opacity: 0;
   transform: translateY(-20px);
-  transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+  transition: opacity 250ms ease-in-out, transform 250ms ease-in-out;
 }
 
 .dropdown > .button-text-black:focus + .dropdown-content.show {
