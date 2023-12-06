@@ -161,6 +161,7 @@ const SocialPage = () => {
 			const fetchedMessages = querySnapshot.docs.map(doc => doc.data());
 			setMessages(fetchedMessages);
 		};
+		/*
 		const checkForUnreadMessages = async () => {
 			let updatedFriendsWithUnread = new Set(friendsWithUnreadMessages);
 			const currentUserRef = doc(firestore, 'users', auth.currentUser.uid);
@@ -194,10 +195,52 @@ const SocialPage = () => {
 		};
 
 		checkForUnreadMessages().catch(console.error);
+		*/
 		fetchMessages();
 		fetchUsers();
 		fetchFriendRequests();
-	}, []);
+	}, [friends]);
+
+
+	useEffect(() => {
+		const checkForUnreadMessages = async () => {
+			if (!auth.currentUser) {
+				console.log('User is logged out');
+				return;
+			}
+			let updatedFriendsWithUnread = new Set(friendsWithUnreadMessages);
+			const currentUserRef = doc(firestore, 'users', auth.currentUser.uid);
+			const currentUserSnap = await getDoc(currentUserRef);
+			if (!currentUserSnap.exists()) {
+				console.log('No such document!');
+				return;
+			}
+
+			const lastReadTimestamps = currentUserSnap.data().lastReadTimestamp || {};
+			friends.forEach(async (friend) => {
+				const lastRead = lastReadTimestamps[friend.uid] || new Date(0);
+				const messagesQuery = query(
+					collection(firestore, 'messages'),
+					where('senderId', '==', friend.uid),
+					where('receiverId', '==', auth.currentUser.uid),
+					orderBy('timestamp', 'desc'),
+					limit(1)
+				);
+				const latestMessageSnap = await getDocs(messagesQuery);
+				if (!latestMessageSnap.empty) {
+					const latestMessage = latestMessageSnap.docs[0].data();
+					if (latestMessage.timestamp.toDate() > lastRead) {
+						updatedFriendsWithUnread.add(friend.uid);
+					} else {
+						updatedFriendsWithUnread.delete(friend.uid);
+					}
+				}
+			});
+			setFriendsWithUnreadMessages(updatedFriendsWithUnread);
+		};
+
+		checkForUnreadMessages().catch(console.error);
+	}, [friends, friendsWithUnreadMessages]);
 
 	const handleAccept = async (requestingUserid) => {
 		//console.log("handle accept called <---");
@@ -240,18 +283,20 @@ const SocialPage = () => {
 	};
 
 
-	const handleReject = async (requestingUserId) => {
+	const handleReject = async (requestingUser) => {
 		const currentUserRef = doc(firestore, 'users', auth.currentUser.uid);
 		try {
 			const currentUserSnap = await getDoc(currentUserRef);
 			if (currentUserSnap.exists()) {
 				const currentUserData = currentUserSnap.data();
-				const updatedFriendRequests = currentUserData.friendRequests.filter(request => request.uid !== requestingUserId);
+				const updatedFriendRequests = currentUserData.friendRequests.filter(request => request.uid !== requestingUser.uid);
 
 				await updateDoc(currentUserRef, {
 					friendRequests: updatedFriendRequests
 				});
-				setFriendRequests(updatedFriendRequests);
+
+
+				setFriendRequests(prevRequests => prevRequests.filter(req => req.uid !== requestingUser.uid));
 
 				alert("Friend request rejected");
 			} else {
@@ -313,23 +358,25 @@ const SocialPage = () => {
 
 
 		</div>
-		{/* Friends request section */}
+		{/* Friend Requests section */}
 		<div className="friend-requests-section">
-		<button onClick={() => setShowDropdown(!showDropdown)}>Friend Requests</button>
+		<button onClick={() => setShowDropdown(!showDropdown)}>
+		Friend Requests ({friendRequests.length})
+		</button>
 		{showDropdown && (
 			<div className="friend-requests-dropdown">
 			<ul>
 			{friendRequests.map((request, index) => (
 				<li key={index}>
 				{request.username}
-				<button onClick={() => handleAccept(request.uid)}>Accept</button>
-				<button onClick={() => handleReject(request.uid)}>Reject</button>
+				{/* Accept Reject button section */}
+				<button onClick={() => handleAccept(request)}>Accept</button>
+				<button onClick={() => handleReject(request)}>Reject</button>
 				</li>
 			))}
 			</ul>
 			</div>
 		)}
-
 		</div>
 		{/* Friends list */}
 		<div className="friends-list">
