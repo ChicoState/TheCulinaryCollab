@@ -370,7 +370,7 @@ const SocialPage = () => {
 				<li key={index}>
 				{request.username}
 				{/* Accept Reject button section */}
-				<button onClick={() => handleAccept(request)}>Accept</button>
+				<button onClick={() => handleAccept(request.uid)}>Accept</button>
 				<button onClick={() => handleReject(request)}>Reject</button>
 				</li>
 			))}

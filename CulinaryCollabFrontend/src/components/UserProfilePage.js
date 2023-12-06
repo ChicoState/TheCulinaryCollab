@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { auth, firestore, storage } from '../firebase';
-import { doc, getDoc, addDoc, getDocs, updateDoc, arrayUnion, collection } from 'firebase/firestore';
+import { writeBatch, doc, getDoc, addDoc, getDocs, updateDoc, arrayUnion, collection } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
 import ViewRecipeModal from './ViewRecipeModal';
 import './UserProfilePage.css';
@@ -179,7 +179,6 @@ const UserProfilePage = () => {
 		return <div>Loading...</div>;
 	}
 
-	// Remove friend from friends list
 	const handleRemoveFriend = async (friendId) => {
 		if (!auth.currentUser) {
 			alert("No user logged in");
@@ -187,16 +186,38 @@ const UserProfilePage = () => {
 		}
 
 		const currentUserRef = doc(firestore, 'users', auth.currentUser.uid);
-		try {
-			await updateDoc(currentUserRef, {
-				friendsList: arrayUnion(friendId)
-			});
-		} catch (error) {
-			console.error("Error removing friend:  ", error);
-			alert("Failed to remove friend.");
-			return;
-		}
+		const friendRef = doc(firestore, 'users', friendId);
 
+		try {
+			const batch = writeBatch(firestore);
+			const currentUserSnap = await getDoc(currentUserRef);
+			if (currentUserSnap.exists()) {
+				const currentUserData = currentUserSnap.data();
+				const updatedCurrentUserFriendsList = currentUserData.friendsList.filter(id => id !== friendId);
+				batch.update(currentUserRef, { friendsList: updatedCurrentUserFriendsList });
+			} else {
+				throw new Error("Current user document not found");
+			}
+
+			const friendSnap = await getDoc(friendRef);
+			if (friendSnap.exists()) {
+				const friendData = friendSnap.data();
+				const updatedFriendFriendsList = friendData.friendsList.filter(id => id !== auth.currentUser.uid);
+				batch.update(friendRef, { friendsList: updatedFriendFriendsList });
+			} else {
+				throw new Error("Friend user document not found");
+			}
+
+			await batch.commit();
+			alert("Friend removed successfully!");
+			setUserProfile(prevState => ({
+				...prevState,
+				friendsList: prevState.friendsList.filter(id => id !== friendId)
+			}));
+		} catch (error) {
+			console.error("Error removing friend: ", error);
+			alert("Failed to remove friend.");
+		}
 	};
 
 
@@ -209,11 +230,11 @@ const UserProfilePage = () => {
 		</div>
 		<div className="user-action-buttons">
 		<button className="back-button" onClick={() => navigate('/social')}>Back to Social Page</button>
-		<button className="send-friend-request" onClick={() => handleSendFriendRequest(uid)}>Send Friend Request</button>
-		{userProfile.friendsList && userProfile.friendsList.includes(auth.currentUser?.uid) && 
-		<button className="remove-friend" onClick={() => handleRemoveFriend(uid)}>Remove Friend</button>}
+		{userProfile.friendsList && userProfile.friendsList.includes(auth.currentUser?.uid) ?
+			<button className="remove-friend-request" onClick={() => handleRemoveFriend(uid)}>Remove Friend</button> :
+			<button className="send-friend-request" onClick={() => handleSendFriendRequest(uid)}>Send Friend Request</button>
+		}
 		</div>
-
 		{/* Grid display for recipes */}
 		<div className="personal-recipes-grid">
 		{currentRecipes.map(recipe => (
