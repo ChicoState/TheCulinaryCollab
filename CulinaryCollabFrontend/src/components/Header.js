@@ -67,8 +67,8 @@ return (
                     Drinks
                 </button>
                 <div className={`dropdown-content ${showDrinksDropdown ? 'show' : 'show'}`}>
-                    <Link to="/workshop">My drinks</Link>
-                    <Link to="/browse">Browse</Link>
+                    <Link to="/workshop">My Drinks</Link>
+                    <Link to="/browse">Browse Public Recipes</Link>
                     <Link to="/inventory-page">Inventory Page</Link>
                 </div>
             </div>

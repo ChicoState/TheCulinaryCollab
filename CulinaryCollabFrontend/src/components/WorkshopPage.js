@@ -434,7 +434,7 @@ const WorkshopPage = () => {
 		<div className="content-area">
 		{/* Recipes Display */}
 		<div className="recipes-display">
-		<h2>My Recipes in All User Recipes</h2>
+		<h2>My Recipes in Public Recipe Workshop</h2>
 		<div className="collection-box">
 		<Collection
 		recipes={allUserRecipes.filter(recipe => recipe.createdBy.uid === auth.currentUser.uid)}

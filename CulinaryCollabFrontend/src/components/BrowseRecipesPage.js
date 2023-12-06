@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './BrowseRecipesPage.css';
 import { firestore, auth } from '../firebase';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { motion as m } from "framer-motion";
 import RecipeSearchBarBrowse from './RecipeSearchBarBrowse';
 import ViewRecipeModal from './ViewRecipeModal';
 import background from "./Browse-background.png";
@@ -82,8 +83,9 @@ const BrowseRecipesPage = () => {
 	}, []);
 
 	return (
-		<div className="browse-recipes-page" style={{backgroundImage: `url(${background})`}}>
-		<h2>Browse Recipes</h2>
+		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
+		<div className="landing-page" style={{backgroundImage: `url(${background})`}}>
+		<h2>Browse Public Workshop Recipes</h2>
 		<RecipeSearchBarBrowse recipes={recipes} onView={openViewModal} onSave={() => saveRecipe(selectedRecipe)} />
 		<div className="recipes-grid">
 		{displayedRecipes.map(recipe => (
@@ -102,6 +104,7 @@ const BrowseRecipesPage = () => {
 		</div>
 		<ViewRecipeModal isOpen={isViewModalOpen} onClose={closeViewModal} recipe={selectedRecipe} onSave={() => saveRecipe(selectedRecipe)} showSaveOption={selectedRecipe && canSaveRecipe(selectedRecipe)} />
 		</div>
+		</m.div>
 	);
 }
 
