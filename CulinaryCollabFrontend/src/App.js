@@ -13,8 +13,10 @@ import ProfilePage from './components/ProfilePage';
 import UserProfilePage from './components/UserProfilePage';
 import ChatPage from './components/ChatPage';
 import WaitingPage from './components/WaitingPage';
+import { UnreadMessagesProvider } from './components/UnreadMessagesContext';
 function App() {
 	return (
+		<UnreadMessagesProvider>
 		<Router>
 		<div className="App">
 		<Header pageTitle={""} /> {}
@@ -34,6 +36,7 @@ function App() {
 		</Routes>
 		</div>
 		</Router>
+		</UnreadMessagesProvider>
 	);
 }
 
