@@ -25,8 +25,15 @@
 }
 
 .bio {
-	margin-top: 20px;
+    word-wrap: break-word;
+    width: calc(100% - 40px);
+    max-width: 600px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 10px 20px;
+    text-align: left;
 }
+
 
 .user-action-buttons {
 	display: flex;
