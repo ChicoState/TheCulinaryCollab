@@ -37,6 +37,10 @@
 	transition: background-color 0.3s;
 }
 
+.bold {
+	font-weight: bold;
+}
+
 .user-item:hover,
 .friend-item:hover {
 	background-color: #f0f0f0;

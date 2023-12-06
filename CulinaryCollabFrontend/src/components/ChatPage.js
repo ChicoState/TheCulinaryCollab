@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { firestore, auth } from '../firebase';
-import { collection, query, where, orderBy, getDocs, addDoc, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, orderBy, getDocs, addDoc, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 import './ChatPage.css';
 const ChatPage = () => {
 	const { friendId } = useParams();
@@ -30,6 +30,14 @@ const ChatPage = () => {
 			console.error("Error fetching messages: ", error);
 		});
 
+		const updateUserLastRead = async () => {
+			const userRef = doc(firestore, 'users', currentUser.uid);
+			await updateDoc(userRef, {
+				[`lastReadTimestamp.${friendId}`]: new Date()
+			});
+		};
+
+		updateUserLastRead().catch(console.error);
 		return unsubscribe;
 	}, [currentUser, friendId]);
 
