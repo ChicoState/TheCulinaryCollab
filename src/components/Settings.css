@@ -1,0 +1,128 @@
+head .span{
+    
+    display: flex;
+    /* left: 40%; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* margin-right: 50px; */
+    position: absolute;
+    left: 40%;
+    border-radius: 25px;
+}
+
+head .img {
+  right: 20%;
+  border-style: solid;
+  border-radius: 25px;
+}
+.header {
+  border-radius: 25px;
+  color: goldenrod;
+  font-size: 75px;
+  display:inline-block;
+  display: flex;
+  /* justify-content: space-between; */
+  justify-content: center;
+  align-items: center;
+    /* padding: 1rem; */
+  background-color: black;
+  position: relative;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  border-radius: 25px;
+}
+
+body {
+  background: rgb(0,45,242);
+  background: radial-gradient(circle, rgba(0,45,242,1) 0%, rgba(226,59,116,1) 100%);
+  /* position: relative; */
+}
+
+.settings-container {
+  top: 30%;
+  left: 30%;
+  right: 30%;
+  /* width: 30%; */
+  height: 60%;
+  background-color: black;
+  position: absolute;
+  border-radius:10px;
+}
+
+.user-info-settings {
+  background-color: lightgray;
+  border-color: black;
+  border-style: solid;
+  height: 33%;
+  border-radius:10px;
+  cursor: pointer;
+}
+
+.user-info-settings img {
+  height: 100%;
+  border-radius:10px;
+}
+
+.user-info-settings span {
+  /* display:flex; */
+  /* align-items: center; */
+  font-size: 40px;
+  position:absolute;
+  top: 12%;
+  right: 10%;
+  left:40%;
+}
+
+.manage-friends-settings {
+  background-color: lightgray;
+  border-style: solid;
+  border-color: black;
+  top:31%;
+  height: 33%;
+  border-radius:10px;
+  cursor: pointer;
+  /* position: relative; */
+}
+
+.manage-friends-settings img {
+  height: 100%;
+  border-radius:10px;
+}
+
+.manage-friends-settings span {
+  /* display:flex; */
+  /* align-items: center; */
+  font-size: 40px;
+  position:absolute;
+  top: 45%;
+  right: 10%;
+  left:40%;
+}
+
+.App-settings {
+  background-color: lightgray;
+  border-style: solid;
+  border-color: black;
+  top:66%;
+  height: 33%;
+  border-radius:10px;
+  cursor: pointer;
+}
+
+.App-settings img {
+  height: 100%;
+  border-radius:10px;
+}
+
+.App-settings span {
+  font-size: 40px;
+  position:absolute;
+  top: 80%;
+  right: 10%;
+  left:40%;
+}
+
+

@@ -1,0 +1,123 @@
+
+.ingredient-input {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.ingredient-row {
+	display: flex;
+	gap: 10px;
+}
+
+.ingredient-row input {
+	flex: 1;
+}
+.button {
+	background-color: #007BFF;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	cursor: pointer;
+	margin-bottom: 20px;
+}
+
+.button:hover {
+	background-color: #0056b3;
+}
+
+h2 {
+	font-size: 24px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.recipe-list {
+	width: 100%;
+	padding: 2px;
+	border-radius: 10px;
+	/*background-color: #f7f7f7;*/
+}
+
+.recipe-scroll {
+	min-height: 130px;
+	display: flex;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+	padding-bottom: 15px;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+.recipe-item {	
+	flex: 0 0 auto;
+	margin: 10px;
+	border: 1px solid #ccc;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left:10px;
+	border: 3px solid #ccc;
+	border-radius: 5px;
+	background-color: #fdfdfd;
+	color: #333;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.recipe-item:hover {
+	background-color: #e0e0e0;
+}
+
+h1, h2 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    color: #333;
+}
+.title-background {
+    background-color: rgba(255, 255, 255, 0.7);
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.collection-box {
+	min-height: 100px;
+	max-width:95vw;
+	border: 1px solid #ccc;
+	border-radius: 30px;
+	padding: 10px;
+	margin-bottom: 20px;
+	background-color: rgba(255, 255, 255, 1);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 95%;
+}
+
+.content-area {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: column;
+	margin: 20px 0;
+}
+
+.recipes-display {
+	width: 75%;
+}
+
+.trash-box {
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 20px;
+	background-color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	width: 95%;
+}
+
