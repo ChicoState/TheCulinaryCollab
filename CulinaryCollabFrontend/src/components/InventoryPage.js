@@ -4,7 +4,7 @@ import { collection, addDoc, getDocs } from 'firebase/firestore';
 import {motion as m } from "framer-motion";
 import './InventoryPage.css';
 
-const RecipeFinder = ( ) => {
+const RecipeFinder = ({ onAddItem, setInventory }) => {
     const [ingredients, setIngredients] = useState('');
     const [recipes, setRecipes] = useState([]);
     const [filteredRecipes, setFilteredRecipes] = useState([]);
@@ -18,8 +18,8 @@ const RecipeFinder = ( ) => {
         const userRecipesCollection = collection(firestore, 'allUserRecipes');
     
         const [publicRecipesSnapshot, userRecipesSnapshot] = await Promise.all([
-          publicRecipesCollection.get(),
-          userRecipesCollection.get()
+          getDocs(publicRecipesCollection),
+          getDocs(userRecipesCollection)
         ]);
 
     const publicRecipes = publicRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
@@ -28,20 +28,31 @@ const RecipeFinder = ( ) => {
     setRecipes([...publicRecipes, ...userRecipes]);
     };
 
-   const searchRecipes = () => {
+    //search recipes by typing in an ingredient
+    const searchRecipes = () => {
         const matchingRecipes = recipes.filter(recipe =>
-          recipe.ingredients && recipe.ingredients.some(ingredient =>
-            ingredient.toLowerCase().includes(ingredients.toLowerCase())
+          recipe.ingredients &&
+          recipe.ingredients.some(ingredient =>
+            typeof ingredient === 'string' && ingredient.toLowerCase().includes(ingredients.toLowerCase())
           )
         );
-    
+      
         setFilteredRecipes(matchingRecipes);
-  };
+    };
 
+    //adding ingredient items to the database
+    //And make sure u are adding stuff to the right place, 
+    //The pages data storage container is set up it’s in /user/userID/inventory
+    //So you need to add the ingredient to the inventory collection
+
+    
+
+    
   useEffect(() => {
     fetchRecipes();
     
     }, []);
+
 
 	if (auth.currentUser && !auth.currentUser.emailVerified) {
 		return (
@@ -66,7 +77,6 @@ const RecipeFinder = ( ) => {
                 <label>Enter Ingredients (comma-separated):</label>
                 <input type="text" value={ingredients} onChange={handleIngredientsChange} />
             </div>
-            <button type="button" onClick={findRecipes}>Find Recipes</button>
             <button type="button" onClick={searchRecipes}>Search Recipes</button>
 
             <h3>Matching Recipes:</h3>
@@ -133,26 +143,36 @@ const AddItemModal = ({ addItem, closeModal }) => {
     );
 };
 
-const SampleInventory = [
-    { name: 'Vodka', quantity: '1 bottle', category: 'Spirits' },
-    { name: 'Gin', quantity: '1 bottle', category: 'Spirits' },
-    { name: 'Lime Juice', quantity: '1 bottle', category: 'Juices' },
-];
 
 const InventoryPage = () => {
-    const [inventory, setInventory] = useState([SampleInventory]);
+    const [inventory, setInventory] = useState([]);
     const [isAddItemModalOpen, setAddItemModalOpen] = useState(false);
+    const [addItemFunction, setAddItemFunction] = useState(null);
 
     const addItem = (item) => {
         setInventory([...inventory, item]);
     };
 
     const openAddItemModal = () => {
+        setAddItemFunction(() => addItem);
         setAddItemModalOpen(true);
     };
 
     const closeAddItemModal = () => {
         setAddItemModalOpen(false);
+    };
+
+    const AddItem = async (item) => {
+        try {
+            const inventoryRef = collection(firestore, `users/${auth.currentUser.uid}/inventory`);
+            await addDoc(inventoryRef, item);
+            alert('Item added successfully!');
+            setInventory(prevInventory => [...prevInventory, item]);
+            //fetchRecipes();
+        } catch (error) {
+            console.error(error);
+            alert('Error adding item!');
+        }
     };
 
     return (
@@ -163,9 +183,9 @@ const InventoryPage = () => {
             <ul>{inventory.map((item, index) => (
                     <li key={index}>{item.name} - {item.quantity} - {item.category}</li>
                 ))}</ul>
-            <RecipeFinder inventory={inventory} />
-            {isAddItemModalOpen && (
-                <AddItemModal addItem={addItem} closeModal={closeAddItemModal} />
+            <RecipeFinder onAddItem={AddItem} setInventory={setInventory} />
+            {isAddItemModalOpen && addItemFunction && (
+                <AddItemModal addItem={AddItem} closeModal={closeAddItemModal} />
             )}
         </div>
 	</m.div>
