@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Autocomplete from 'react-autocomplete';
+import './EditItemModal.css';
+
 
 const cocktailIngredients = [
 	// Spirits and Liquors
@@ -126,32 +128,71 @@ const cocktailIngredients = [
 	"Cardamom"
 ];
 
-const EditItemModal = ({ item, onClose, onUpdate }) => {
+const EditItemModal = ({ item, onClose, onUpdate}) => {
+    const [itemName, setItemName] = useState(item.name);
+    const [itemQuantity, setItemQuantity] = useState(item.quantity);
 
-	const handleFormSubmit = (e) => {
-		e.preventDefault();
-		const newName = e.target.elements.name.value;
-		const newQuantity = e.target.elements.quantity.value;
-		const updatedItem = { ...item, name: newName, quantity: newQuantity };
-		onUpdate(updatedItem);
-	};
-	return (
-		<div className="modal-overlay">
-		<div className="edit-item-modal">
-		<h2>Edit Inventory Item</h2>
-		<form onSubmit={(e) => onUpdate(e, item.id)}>
-		<input defaultValue={item.name} name="name" />
-		<select defaultValue={item.quantity} name="quantity">
-		<option value="A lot">A lot</option>
-		<option value="Some">Some</option>
-		<option value="A little">A little</option>
-		</select>
-		<button type="submit">Save</button>
-		</form>
-		<button onClick={onClose}>Close</button>
-		</div>
-		</div>
-	);
+    const handleItemQuantityChange = (e) => {
+        setItemQuantity(e.target.value);
+    };
+
+    const shouldItemRender = (item, value) => {
+        return item.toLowerCase().indexOf(value.toLowerCase()) > -1;
+    };
+
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!cocktailIngredients.includes(itemName)) {
+            alert("Please select an ingredient from the list.");
+            return;
+        }
+
+        const updatedItem = { ...item, name: itemName, quantity: itemQuantity };
+        onUpdate(updatedItem);
+    };
+
+    return (
+        <div className="modal-overlay">
+            <div className="edit-item-modal">
+                <h2>Edit Inventory Item</h2>
+                <form onSubmit={handleFormSubmit}>
+                    <div className="form-group">
+                        <label>Item Name:</label>
+                        <div className="react-autocomplete-input">
+                            <Autocomplete
+                                getItemValue={(item) => item}
+                                items={cocktailIngredients}
+                                shouldItemRender={shouldItemRender}
+                                renderItem={(item, isHighlighted) =>
+                                    <div key={item} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                                        {item}
+                                    </div>
+                                }
+                                value={itemName}
+                                onChange={(e) => setItemName(e.target.value)}
+                                onSelect={(val) => setItemName(val)}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label>Item Quantity:</label>
+                        <select value={itemQuantity} onChange={handleItemQuantityChange} required>
+                            <option value="A lot">A lot</option>
+                            <option value="Some">Some</option>
+                            <option value="A little">A little</option>
+                        </select>
+                    </div>
+	    
+	    <div className ="button-container">
+                    <button type="submit">Save Item</button>
+           
+                <button onClick={onClose}>Close</button>
+            </div>
+	    </form>
+        </div>
+	    </div>
+    );
 };
 
 export default EditItemModal;
