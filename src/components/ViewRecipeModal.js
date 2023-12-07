@@ -15,6 +15,16 @@ const ViewRecipeModal = ({ isOpen, onClose, recipe, onSave, showSaveOption }) =>
 	const [username, setUsername] = useState('');
 	const user = auth.currentUser;
 
+	const handleSaveClick = async () => {
+		try {
+			await onSave(recipe);
+			alert('Recipe saved successfully to your saved recipes collection!');
+		} catch (error) {
+			console.error('Error saving recipe: ', error);
+			alert('Failed to save the recipe.');
+		}
+	};
+
 	useEffect(() => {
 		const fetchUserData = async () => {
 			if (user) {
@@ -134,7 +144,7 @@ const ViewRecipeModal = ({ isOpen, onClose, recipe, onSave, showSaveOption }) =>
 		<p><strong>Preparation:</strong> {recipe.preparation}</p>
 		{recipe.cost && <p><strong>Cost:</strong> {recipe.cost}</p>}
 		{recipe.timeToMake && <p><strong>Time to Make:</strong> {recipe.timeToMake}</p>}
-		{showSaveOption && user && <button onClick={onSave}>Save Recipe</button>}
+		{showSaveOption && user && (<button onClick={handleSaveClick}>Save Recipe</button>)}
 		<button onClick={onClose}>Close</button>
 		</div>
 		</div>

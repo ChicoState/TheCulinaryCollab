@@ -43,11 +43,11 @@
 	gap: 10px;
 }
 
-.edit-button {
+.edit-button-item {
 	position: absolute;
 	top: 20px;
 	left: 20px;
 }
-.delete-button, .close-button {
+.delete-button-item, .close-button-item {
 	padding: 5px 10px;
 }

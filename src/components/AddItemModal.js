@@ -54,6 +54,7 @@ const cocktailIngredients = [
 	"Tia Maria",
 
 	// Mixers and Non-Alcoholic Ingredients
+	"Milk",
 	"Club Soda",
 	"Tonic Water",
 	"Cola",

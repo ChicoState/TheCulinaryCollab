@@ -8,7 +8,18 @@ import EditItemModal from './EditItemModal';
 import './InventoryPage.css';
 import ViewRecipeModal from './ViewRecipeModal';
 
+const seasonalIngredients = {
+	Spring: [ 'basil', 'thyme', 'strawberry', 'raspberry', 'lemon', 'lime', 'rhubarb', 'elderflower', 'lavender', 'chamomile', 'honey', 'green tea'],
+	Summer: ['watermelon', 'pineapple', 'mango', 'peach', 'citrus', 'cilantro', 'lemongrass', 'coconut', 'passionfruit', 'kiwi', 'blueberry', 'blackberry', 'raspberry'],
+	Autumn: ['cinnamon', 'nutmeg', 'allspice', 'ginger', 'star anise', 'apple', 'pear', 'pomegranate', 'fig', 'cranberry', 'walnut', 'hazelnut', 'pumpkin', 'maple syrup', 'caramel'],
+	Winter: ['Mint leaves','orange', 'grapefruit', 'blood orange', 'lemon', 'cinnamon', 'clove', 'star anise', 'nutmeg', 'peppermint', 'chocolate', 'coffee', 'cream', 'vanilla']
+};
+
+
 const InventoryPage = () => {
+	//const [filteredRecommendedRecipes, setFilteredRecommendedRecipes] = useState(recommendedRecipes);
+	const [searchQuery, setSearchQuery] = useState('');
+	const [searchMode, setSearchMode] = useState("All");
 	const [currentUserEmail, setCurrentEmail] = useState(null);
 	const [inventory, setInventory] = useState([]);
 	const [isAddItemModalOpen, setAddItemModalOpen] = useState(false);
@@ -39,6 +50,10 @@ const InventoryPage = () => {
 		setSelectedItem(item);
 		setViewItemModalOpen(false);
 		setEditItemModalOpen(true);
+	};
+
+	const handleSearchChange = (event) => {
+		setSearchQuery(event.target.value.toLowerCase());
 	};
 
 	const fetchUserInventory = async () => {
@@ -85,7 +100,7 @@ const InventoryPage = () => {
 
 	useEffect(() => {
 		fetchRecipes();
-	}, []);
+	}, [searchMode]);
 
 	useEffect(() => {
 		if (recipes.length > 0 && inventory.length > 0) {
@@ -93,6 +108,17 @@ const InventoryPage = () => {
 		}
 	}, [inventory, recipes]);
 
+	useEffect(() => {
+		if (searchQuery.length >= 2) {
+			setFilteredRecommendedRecipes(recommendedRecipes.filter(({ recipe }) =>
+				recipe.name.toLowerCase().includes(searchQuery)
+			));
+		} else {
+			setFilteredRecommendedRecipes(recommendedRecipes);
+		}
+	}, [searchQuery, recommendedRecipes]);
+
+	const [filteredRecommendedRecipes, setFilteredRecommendedRecipes] = useState(recommendedRecipes);
 	const addItem = (item) => {
 		setInventory([...inventory, item]);
 	};
@@ -104,19 +130,70 @@ const InventoryPage = () => {
 	const closeAddItemModal = () => {
 		setAddItemModalOpen(false);
 	};
+
 	const fetchRecipes = async () => {
-		const publicRecipesCollection = collection(firestore, 'public-recipes');
-		const userRecipesCollection = collection(firestore, 'allUserRecipes');
+		let fetchedRecipes = [];
 
-		const [publicRecipesSnapshot, userRecipesSnapshot] = await Promise.all([
-			getDocs(publicRecipesCollection),
-			getDocs(userRecipesCollection)
-		]);
+		if (searchMode === "All") {
+			const publicRecipesCollection = collection(firestore, 'public-recipes');
+			const userRecipesCollection = collection(firestore, 'allUserRecipes');
+			const [publicRecipesSnapshot, userRecipesSnapshot] = await Promise.all([
+				getDocs(publicRecipesCollection),
+				getDocs(userRecipesCollection)
+			]);
+			fetchedRecipes = [
+				...publicRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })),
+				...userRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }))
+			];
+		} else if (searchMode === "UserCreated") {
+			const userRecipesCollection = collection(firestore, 'allUserRecipes');
+			const userRecipesSnapshot = await getDocs(userRecipesCollection);
+			fetchedRecipes = userRecipesSnapshot.docs
+				.map(doc => ({ ...doc.data(), id: doc.id }))
+				.filter(recipe => recipe.createdBy);
+		}else if (searchMode === "Seasonal") {
+			const allRecipesCollection = collection(firestore, 'allUserRecipes');
+			const allRecipesSnapshot = await getDocs(allRecipesCollection);
+			let allRecipes = allRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 
-		const publicRecipes = publicRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-		const userRecipes = userRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+			fetchedRecipes = allRecipes.filter(recipe => isSeasonalRecipe(recipe, seasonalIngredients));
+		}
 
-		setRecipes([...publicRecipes, ...userRecipes]);
+		setRecipes(fetchedRecipes);
+	};
+
+	const isSeasonalRecipe = (recipe, seasonalIngredients) => {
+		let matchedSeasons = [];
+
+		for (const [season, ingredients] of Object.entries(seasonalIngredients)) {
+			if (recipe.ingredients.some(ingredient => {
+				const ingredientLower = ingredient.ingredient.toLowerCase();
+				return ingredients.some(seasonalIngredient => {
+					const seasonalIngredientLower = seasonalIngredient.toLowerCase();
+					return isSubstringMatch(ingredientLower, seasonalIngredientLower);
+				});
+			})) {
+				matchedSeasons.push(season);
+			}
+		}
+
+		if (matchedSeasons.length > 0) {
+			recipe.seasons = matchedSeasons;
+			return true;
+		}
+
+		return false;
+	};
+
+	const isSubstringMatch = (ingredientLower, seasonalIngredientLower) => {
+		for (let i = 0; i <= ingredientLower.length - 4; i++) {
+			for (let j = 0; j <= seasonalIngredientLower.length - 4; j++) {
+				if (ingredientLower.substring(i, i + 4) === seasonalIngredientLower.substring(j, j + 4)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	};
 
 
@@ -190,13 +267,35 @@ const InventoryPage = () => {
 
 		<div className="recipe-recommendations">
 		<h3>Recommended Recipes Based on Your Inventory</h3>
+		<div className="search-section">
+		
+		{/* Search Mode Buttons */}
+		<div className="search-modes">
+		<button onClick={() => setSearchMode("All")}>All</button>
+		<button onClick={() => setSearchMode("Seasonal")}>Seasonal</button>
+		<button onClick={() => setSearchMode("UserCreated")}>User Created</button>
+		</div>
+
+		{/* Search Bar */}
+		<div className="recipe-search-bar">
+		<input
+		type="text"
+		placeholder="Search recipes..."
+		value={searchQuery}
+		onChange={handleSearchChange}
+		style={{ width: "150px" }}
+		/>
+		</div>
+		</div>
+
 		<div className="recommended-recipes">
-		{recommendedRecipes.map(({ recipe, matchedIngredient }, index) => (
+		{filteredRecommendedRecipes.map(({ recipe, matchedIngredient }, index) => (
 			<div key={index} className="recipe-item" onClick={() => openViewRecipeModal(recipe)}>
 			<h4>{recipe.name}</h4>
 			<p><strong>Matched based on:</strong> {matchedIngredient}</p>
-			<p>Preparation: {recipe.preparation}</p>
-			<p>Taste: {recipe.taste}</p>
+			{recipe.seasons && <p><strong>Seasons:</strong> {recipe.seasons.join(', ')}</p>}
+			<p><strong>{recipe.createdBy ? `Created by: ${recipe.createdBy.username}` : "Public Recipe"}</strong></p>
+			<p><strong>Taste:</strong> {recipe.taste}</p>
 			</div>
 		))}
 		</div>
