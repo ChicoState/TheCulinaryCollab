@@ -40,13 +40,6 @@ const RecipeFinder = ({ onAddItem, setInventory }) => {
         setFilteredRecipes(matchingRecipes);
     };
 
-    //adding ingredient items to the database
-    //And make sure u are adding stuff to the right place, 
-    //The pages data storage container is set up it’s in /user/userID/inventory
-    //So you need to add the ingredient to the inventory collection
-
-    
-
     
   useEffect(() => {
     fetchRecipes();
