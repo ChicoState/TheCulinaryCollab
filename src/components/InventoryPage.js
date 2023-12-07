@@ -1,76 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { firestore, auth } from '../firebase';
-import { doc, updateDoc, collection, getDocs, deleteDoc } from 'firebase/firestore';
+import { doc, addDoc, updateDoc, collection, getDocs, deleteDoc } from 'firebase/firestore';
 import { motion as m } from "framer-motion";
 import AddItemModal from './AddItemModal';
 import ViewItemModal from './ViewItemModal';
 import EditItemModal from './EditItemModal';
 import './InventoryPage.css';
-
-const RecipeFinder = () => {
-	const [ingredients, setIngredients] = useState('');
-	const [recipes, setRecipes] = useState([]);
-	const [filteredRecipes, setFilteredRecipes] = useState([]);
-
-	const handleIngredientsChange = (e) => {
-		setIngredients(e.target.value);
-	};
-
-	const fetchRecipes = async () => {
-		const publicRecipesCollection = collection(firestore, 'public-recipes');
-		const userRecipesCollection = collection(firestore, 'allUserRecipes');
-
-		const [publicRecipesSnapshot, userRecipesSnapshot] = await Promise.all([
-			getDocs(publicRecipesCollection),
-			getDocs(userRecipesCollection)
-		]);
-
-		const publicRecipes = publicRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-		const userRecipes = userRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-
-		setRecipes([...publicRecipes, ...userRecipes]);
-	};
-
-	const searchRecipes = () => {
-		const matchingRecipes = recipes.filter(recipe =>
-			recipe.ingredients && recipe.ingredients.some(ingredient =>
-				ingredient.toLowerCase().includes(ingredients.toLowerCase())
-			)
-		);
-
-		setFilteredRecipes(matchingRecipes);
-	};
-
-	useEffect(() => {
-		fetchRecipes();
-	}, []);
-
-	return (
-		<div className="recipe-finder">
-		<h2>Find Recipes</h2>
-		<div className="form-group">
-		<label>Enter Ingredients (comma-separated):</label>
-		<input type="text" value={ingredients} onChange={handleIngredientsChange} />
-		</div>
-		<button type="button" onClick={searchRecipes}>Find Recipes</button>
-		<h3>Matching Recipes:</h3>
-		<ul>
-		{filteredRecipes.map((recipe, index) => (
-			<li key={index}>{recipe.name}</li>
-		))}
-		</ul>
-		</div>
-	);
-};
+import ViewRecipeModal from './ViewRecipeModal';
 
 const InventoryPage = () => {
+	const [currentUserEmail, setCurrentEmail] = useState(null);
 	const [inventory, setInventory] = useState([]);
 	const [isAddItemModalOpen, setAddItemModalOpen] = useState(false);
 	const [selectedItem, setSelectedItem] = useState(null);
+	const [recommendedRecipes, setRecommendedRecipes] = useState([]);
 	const [isViewItemModalOpen, setViewItemModalOpen] = useState(false);
 	const [isEditItemModalOpen, setEditItemModalOpen] = useState(false);
+	const [recipes, setRecipes] = useState([]);
+	const [isViewRecipeModalOpen, setIsViewRecipeModalOpen] = useState(false);
+	const [selectedRecipe, setSelectedRecipe] = useState(null);
 	const userID = auth.currentUser?.uid;
 
+	const openViewRecipeModal = (recipe) => {
+		setSelectedRecipe(recipe);
+		setIsViewRecipeModalOpen(true);
+	};
+
+	const closeViewRecipeModal = () => {
+		setIsViewRecipeModalOpen(false);
+		setSelectedRecipe(null);
+	};
 	const handleItemSelect = (item) => {
 		setSelectedItem(item);
 		setViewItemModalOpen(true);
@@ -124,6 +83,16 @@ const InventoryPage = () => {
 		fetchUserInventory();
 	}, [userID]);
 
+	useEffect(() => {
+		fetchRecipes();
+	}, []);
+
+	useEffect(() => {
+		if (recipes.length > 0 && inventory.length > 0) {
+			setRecommendedRecipes(recommendRecipes(inventory, recipes));
+		}
+	}, [inventory, recipes]);
+
 	const addItem = (item) => {
 		setInventory([...inventory, item]);
 	};
@@ -135,9 +104,57 @@ const InventoryPage = () => {
 	const closeAddItemModal = () => {
 		setAddItemModalOpen(false);
 	};
+	const fetchRecipes = async () => {
+		const publicRecipesCollection = collection(firestore, 'public-recipes');
+		const userRecipesCollection = collection(firestore, 'allUserRecipes');
+
+		const [publicRecipesSnapshot, userRecipesSnapshot] = await Promise.all([
+			getDocs(publicRecipesCollection),
+			getDocs(userRecipesCollection)
+		]);
+
+		const publicRecipes = publicRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+		const userRecipes = userRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+
+		setRecipes([...publicRecipes, ...userRecipes]);
+	};
+
+
+	const saveRecipe = async (recipe) => {
+		if (auth.currentUser) {
+			const recipeToSave = {
+				...recipe,
+				originalCreator: recipe.createdBy ? (recipe.createdBy.username || recipe.createdBy.email) : 'Public',
+				savedFromUsername: recipe.createdBy ? recipe.createdBy.username : 'Public'
+			};
+
+			const savedRecipesRef = collection(firestore, `users/${auth.currentUser.uid}/savedRecipes`);
+			await addDoc(savedRecipesRef, recipeToSave);
+		}
+	};
+
+	const canSaveRecipe = (recipe) => {
+		const isUserLoggedIn = auth.currentUser !== null;
+		const isEmailVerified = isUserLoggedIn ? auth.currentUser.emailVerified : false;
+		return isUserLoggedIn && isEmailVerified && (!recipe.createdBy || (recipe.createdBy.email !== currentUserEmail));
+	};
+
+
+	const recommendRecipes = (inventory, allRecipes) => {
+		let recommendations = [];
+		inventory.forEach(item => {
+			allRecipes.forEach(recipe => {
+				if (recipe.ingredients.some(ing => ing.ingredient.toLowerCase() === item.name.toLowerCase())) {
+					recommendations.push({ recipe, matchedIngredient: item.name });
+				}
+			});
+		});
+		return recommendations;
+	};
+
 
 	return (
-		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
+		<m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75 }}>
 		<div className="inventory-page">
 		<h2>Inventory</h2>
 		<button onClick={openAddItemModal}>Add Item</button>
@@ -170,6 +187,22 @@ const InventoryPage = () => {
 			onUpdate={handleItemUpdate}
 			/>
 		)}
+
+		<div className="recipe-recommendations">
+		<h3>Recommended Recipes Based on Your Inventory</h3>
+		<div className="recommended-recipes">
+		{recommendedRecipes.map(({ recipe, matchedIngredient }, index) => (
+			<div key={index} className="recipe-item" onClick={() => openViewRecipeModal(recipe)}>
+			<h4>{recipe.name}</h4>
+			<p><strong>Matched based on:</strong> {matchedIngredient}</p>
+			<p>Preparation: {recipe.preparation}</p>
+			<p>Taste: {recipe.taste}</p>
+			</div>
+		))}
+		</div>
+		</div>
+
+		<ViewRecipeModal isOpen={isViewRecipeModalOpen} onClose={closeViewRecipeModal} recipe={selectedRecipe} onSave={() => saveRecipe(selectedRecipe)} showSaveOption={selectedRecipe && canSaveRecipe(selectedRecipe)} />
 		</div>
 		</m.div>
 	);

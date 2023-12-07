@@ -20,3 +20,51 @@
 .inventory-item:hover {
   background-color: #ececec;
 }
+
+.recipe-recommendations {
+    margin-top: 30px;
+}
+
+.recommended-recipes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+.recipe-item {
+    margin-right: 15px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+}
+
+.recipe-item h4 {
+    margin-top: 0;
+}
+
+
+.fetched-recipes {
+    margin-top: 20px;
+}
+
+.recipes-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+.recipes-list .recipe-item {
+    margin-right: 15px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+}
+
+.recipes-list .recipe-item h4 {
+    margin-top: 0;
+}
+
