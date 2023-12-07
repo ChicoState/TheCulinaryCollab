@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { firestore, storage, auth } from '../firebase';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
 import {motion as m } from "framer-motion";
 import './InventoryPage.css';
 
-const RecipeFinder = ({ inventory }) => {
+const RecipeFinder = ( ) => {
     const [ingredients, setIngredients] = useState('');
     const [recipes, setRecipes] = useState([]);
     const [filteredRecipes, setFilteredRecipes] = useState([]);
@@ -12,27 +13,35 @@ const RecipeFinder = ({ inventory }) => {
         setIngredients(e.target.value);
     };
 
-    const findRecipes = () => {
-        const availableRecipes = [
-            { name: 'Recipe 1', ingredients: ['Ingredient A', 'Ingredient B'] },
-            { name: 'Recipe 2', ingredients: ['Ingredient B', 'Ingredient C'] },
-        ];
+    const fetchRecipes = async () => {
+        const publicRecipesCollection = collection(firestore, 'public-recipes');;
+        const userRecipesCollection = collection(firestore, 'allUserRecipes');
+    
+        const [publicRecipesSnapshot, userRecipesSnapshot] = await Promise.all([
+          publicRecipesCollection.get(),
+          userRecipesCollection.get()
+        ]);
 
-        const matchingRecipes = availableRecipes.filter(recipe =>
-            recipe.ingredients.every(ingredient => ingredients.includes(ingredient))
-        );
+    const publicRecipes = publicRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+    const userRecipes = userRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 
-        setRecipes(matchingRecipes);
-        setFilteredRecipes(matchingRecipes);
+    setRecipes([...publicRecipes, ...userRecipes]);
     };
 
-    const searchRecipes = () => {
+   const searchRecipes = () => {
         const matchingRecipes = recipes.filter(recipe =>
-            recipe.ingredients.every(ingredient => ingredients.includes(ingredient))
+          recipe.ingredients && recipe.ingredients.some(ingredient =>
+            ingredient.toLowerCase().includes(ingredients.toLowerCase())
+          )
         );
+    
+        setFilteredRecipes(matchingRecipes);
+  };
 
-	    setFilteredRecipes(matchingRecipes);
-    };
+  useEffect(() => {
+    fetchRecipes();
+    
+    }, []);
 
 	if (auth.currentUser && !auth.currentUser.emailVerified) {
 		return (
@@ -131,7 +140,7 @@ const SampleInventory = [
 ];
 
 const InventoryPage = () => {
-    const [inventory, setInventory] = useState(SampleInventory);
+    const [inventory, setInventory] = useState([SampleInventory]);
     const [isAddItemModalOpen, setAddItemModalOpen] = useState(false);
 
     const addItem = (item) => {
