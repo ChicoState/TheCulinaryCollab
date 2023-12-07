@@ -138,14 +138,14 @@ const AddItemModal = ({ addItem, closeModal, userID }) => {
 	};
 
 	const shouldItemRender = (item, value) => {
-		return item.toLowerCase().indexOf(value.toLowerCase()) > -1 && value.length > 1;
+		return item.toLowerCase().indexOf(value.toLowerCase()) > -1 && value.length > 0;
 	};
 
 	const checkForDuplicate = async (itemName) => {
 		const userInventoryCollection = collection(firestore, `users/${userID}/inventory`);
 		const q = query(userInventoryCollection, where("name", "==", itemName));
 		const querySnapshot = await getDocs(q);
-		return !querySnapshot.empty; // Returns true if item is already in the list
+		return !querySnapshot.empty;
 	};
 
 	const handleSubmit = async (e) => {
@@ -191,13 +191,17 @@ const AddItemModal = ({ addItem, closeModal, userID }) => {
 			{item}
 			</div>
 		}
+
 		value={itemName}
 		onChange={(e) => {
 			setItemName(e.target.value);
 			setIsDuplicate(false);
 		}}
 		onSelect={(val) => setItemName(val)}
+		wrapperStyle={{ position: 'relative', display: 'block' }}
+		menuStyle={{ position: 'absolute', top: '100%', left: 0, right: 0 }}
 		/>
+
 		</div>
 		{isDuplicate && <div className="error-message">Item already exists.</div>}
 		</div>
