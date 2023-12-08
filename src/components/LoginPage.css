@@ -23,16 +23,4 @@ input {
   flex-direction: column;
 }
 
-.common-button-style {
-  background-color: #4caf50; 
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  border-color:#45a049; 
-  cursor: pointer;
-  margin-bottom: 10px;
-}
 
-.common-button-style:hover {
-  color: #45a049; 
-}

@@ -13,6 +13,7 @@ import ProfilePage from './components/ProfilePage';
 import UserProfilePage from './components/UserProfilePage';
 import ChatPage from './components/ChatPage';
 import WaitingPage from './components/WaitingPage';
+import DrinkViewPage from './components/DrinkViewPage';
 import { UnreadMessagesProvider } from './components/UnreadMessagesContext';
 function App() {
 	return (
@@ -30,6 +31,7 @@ function App() {
 		<Route path="/register" element={<RegisterPage />} />
 		<Route path="/social" element={<SocialPage />} />
 		<Route path="/profile" element={<ProfilePage />} />
+		<Route path="/drink-view-page" element={<DrinkViewPage />} />
 		<Route path="/user/:uid" element={<UserProfilePage />} />
 		<Route path="/chat/:friendId" element={<ChatPage />} />
 		<Route path="/WaitingPage" element={<WaitingPage />} />
