@@ -41,7 +41,6 @@ const RecipeSearchBar = ({personalRecipes, savedRecipes, publicRecipes, onView }
 		onChange={handleInputChange}
 		className="search-bar"
 		/>
-		<button onClick={handleSearch} className="search-button">Search</button>
 		</div>            
 		<ul className="search-results-list">
 		{searchResults.map((recipe, index) => (

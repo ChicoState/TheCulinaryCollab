@@ -14,7 +14,7 @@ import ViewPersonalRecipeModal from './ViewPersonalRecipeModal';
 import ViewSavedRecipeModal from './ViewSavedRecipeModal';
 import RecipeItem from './RecipeItem';
 import {motion as m } from "framer-motion";
-import background from "./Workshop-background.png";
+import background from "./gradient.png";
 const WorkshopPage = () => {
 	const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 	const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -366,13 +366,31 @@ const WorkshopPage = () => {
 			}
 		};
 
+		const getTitle = (type) => {
+			switch (type) {
+				case 'allUserRecipes':
+					return 'My Recipes in Public Recipe Workshop';
+				case 'personal':
+					return 'My Personal Recipes';
+				case 'saved':
+					return 'My Saved Recipes';
+				case 'profileDisplay':
+					return 'Profile Display Recipes';
+				case 'public':
+					return 'Public Recipes';
+				default:
+					return 'Collection';
+			}
+		};
+
 		return (
 			<div ref={drop} className={`recipe-list ${type}`}>
-			<div className="recipe-scroll">
-			{recipes.map((recipe) => (
-				<RecipeItem key={recipe.id} recipe={recipe} type={type} onOpenModal={() => onRecipeClick(recipe)} />
-			))}
-			</div>
+				<h3 className="collection-title">{getTitle(type)}</h3>
+				<div className="recipe-scroll">
+					{recipes.map((recipe) => (
+						<RecipeItem key={recipe.id} recipe={recipe} type={type} onOpenModal={() => onRecipeClick(recipe)} />
+					))}
+				</div>
 			</div>
 		);
 	};
@@ -419,7 +437,6 @@ const WorkshopPage = () => {
 		<DndProvider backend={HTML5Backend}>
 		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
 		<div className="landing-page" style={{backgroundImage: `url(${background})`}}>
-		 {/* Add the "Enter Drink View" button */}
                 <div className="enter-drink-view-section">
                     <button onClick={() => navigate('/drink-view-page')} >
                         Enter Drink View
@@ -442,7 +459,6 @@ const WorkshopPage = () => {
 		<div className="content-area">
 		{/* Recipes Display */}
 		<div className="recipes-display">
-		<h2>My Recipes in Public Recipe Workshop</h2>
 		<div className="collection-box">
 		<Collection
 		recipes={allUserRecipes.filter(recipe => recipe.createdBy.uid === auth.currentUser.uid)}
@@ -458,25 +474,21 @@ const WorkshopPage = () => {
 		</div>
 		</div> 
 		{/* Public recipes */}
-		<h2>Public Recipes</h2>
 		<div className="collection-box">
 		<Collection recipes={publicRecipes.filter(recipe => recipe.id !== 'initial')} type="public" handleDrop={handleDrop} />
 		</div>
 
 		{/* Personal Recipes */}
-		<h2>My Personal Recipes</h2>
 		<div className="collection-box">
 		<Collection recipes={personalRecipes.filter(recipe => recipe.id !== 'initial')} type="personal" handleDrop={handleDrop} />
 		</div>
 
 		{/* Saved Recipes */}
-		<h2>My Saved Recipes</h2>
 		<div className="collection-box">
 		<Collection recipes={savedRecipes.filter(recipe => recipe.id !== 'initial')} type="saved" handleDrop={handleDrop} />
 		</div>
 
 		{/* Profile-display Recipes */}
-		<h2>Profile Display Recipes</h2>
 		<div className="collection-box">
 		<Collection recipes={profileDisplayRecipes.filter(recipe => recipe.id !== 'initial')} type="profileDisplay" handleDrop={handleDrop} />
 		</div>

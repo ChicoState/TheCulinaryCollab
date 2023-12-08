@@ -1,47 +1,83 @@
 .recipe-full-screen {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 85%;
-  height: 85%;
-  background-color: white;
-  z-index: 1000;
-  overflow-y: auto;
-  border-radius: 10px;
-  padding: 2.5%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0.7);
+	width: 85%;
+	height: 85%;
+	background-color: white;
+	z-index: 1000;
+	overflow-y: auto;
+	border-radius: 10px;
+	padding: 2.5%;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	animation: scaleUp 0.3s forwards;
+	opacity: 0.95;
 }
 
 .close-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    font-size: 1.5em;
-    cursor: pointer;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	background: none;
+	border: none;
+	font-size: 1.5em;
+	cursor: pointer;
+	color: black;
+}
+
+.recipe-name {
+	font-size: 2.5em;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.recipe-details {
+	font-size: 1.5em;
+	text-align: left;
+	width: 100%;
+	padding: 20px;
+	box-sizing: border-box;
+	line-height: 1.4;
+}
+
+.recipe-details p {
+	margin: 10px 0;
+}
+
+
+.recipe-details ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.recipe-details li {
+	margin: 5px 0;
 }
 
 @keyframes scaleUp {
-    0% {
-        transform: scale(0.7);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+	0% {
+		transform: translate(-50%, -50%) scale(0.7);
+	}
+	100% {
+		transform: translate(-50%, -50%) scale(1);
+	}
+}
+@keyframes scaleDown {
+	0% {
+		transform: translate(-50%, -50%) scale(1);
+	}
+	100% {
+		transform: translate(-50%, -50%) scale(0.7);
+		opacity: 0;
+	}
 }
 
+.modal-closing {
+	animation: scaleDown 0.3s forwards;
+}

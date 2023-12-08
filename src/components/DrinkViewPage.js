@@ -16,13 +16,13 @@ const DrinkViewPage = () => {
 	const openRecipe = (recipe) => {
 		console.log("Modal should be open");
 		console.log("Recipe: ", recipe);
-        setViewingRecipe(recipe);
-    };
+		setViewingRecipe(recipe);
+	};
 
-    const closeRecipe = () => {
-	    console.log("Modal should be closed");
-        setViewingRecipe(null);
-    };
+	const closeRecipe = () => {
+		console.log("Modal should be closed");
+		setViewingRecipe(null);
+	};
 
 	const fetchPersonalRecipes = async () => {
 		const personalRecipesCol = collection(firestore, `users/${auth.currentUser.uid}/personalRecipes`);
@@ -99,6 +99,7 @@ const DrinkViewPage = () => {
 	return (
 		<div className="drink-view-page">
 		<div className="collection-buttons">
+		<button className="back-to-workshop-button" onClick={() => navigate("/workshop")}>Back to Workshop</button>
 		{['My Personal Recipes', 'My Saved Recipes', 'My Displayed Recipes', 'My Posted Recipes', 'Public Recipes'].map((collectionName) => (
 			<button
 			key={collectionName}
@@ -109,15 +110,14 @@ const DrinkViewPage = () => {
 			</button>
 		))}
 		</div>
-<div className="recipe-list">
-                {recipes.map((recipe) => (
-                    <RecipeCard key={recipe.id} recipe={recipe} onClick={() => openRecipe(recipe)} />
-                ))}
-            </div>
-            {viewingRecipe && <RecipeFullScreen recipe={viewingRecipe} onClose={closeRecipe} />}
-            <button onClick={() => navigate("/workshop")}>Back to Workshop</button>
-        </div>
-    );
+		<div className="recipe-list">
+		{recipes.map((recipe) => (
+			<RecipeCard key={recipe.id} recipe={recipe} onClick={() => openRecipe(recipe)} />
+		))}
+		</div>
+		{viewingRecipe && <RecipeFullScreen recipe={viewingRecipe} onClose={closeRecipe} />}
+		</div>
+	);
 };	
 export default DrinkViewPage;
 

@@ -9,14 +9,13 @@
 .collection-buttons {
 	display: flex;
 	justify-content: center;
-	margin-bottom: 20px;
+	border-radius: 50px;
 }
 
 .collection-buttons button {
 	padding: 10px 20px;
 	margin: 0 10px;
 	border: none;
-	background-color: #f0f0f0;
 	cursor: pointer;
 	transition: transform 0.3s ease-in-out;
 }
@@ -24,7 +23,7 @@
 .collection-buttons button.active {
 	font-weight: bold;
 	transform: scale(1.1);
-	background-color: #c8e6c9;
+	background-color: #79eb7d;
 }
 
 .recipe-list {
@@ -66,4 +65,20 @@
 }
 .inventory-display {
 	justify-content: flex-start;
+}
+
+.back-to-workshop-button {
+	position:absolute;
+	top: 21%; 
+	right: 2%;
+	padding: 10px 20px;
+	font-size: 1em;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	z-index: 1;
+}
+
+.back-to-workshop-button:hover {
+	opacity: 0.8;
 }

@@ -2,3 +2,9 @@
     font-size: smaller;
     font-style: italic;
 }
+.search-bar {
+    width: 200px;
+    height: 40px;
+    border-radius: 50px;
+    margin-right: 10px;
+}
