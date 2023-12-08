@@ -68,3 +68,39 @@
     margin-top: 0;
 }
 
+button {
+  background-color: #f4b400;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.active-search-mode {
+    font-weight: bold;
+    font-size: 1.1em;
+    background-color: #f4b400;
+}
+
+.recipe-recommendations h3 {
+  text-align: center;
+  font-size: 1.5em;
+  color: #4a4a4a;
+  margin-bottom: 20px;
+}
+
+.recipe-recommendations {
+  background-color: #fffbe6;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background: linear-gradient(to right, #ffcc80, #ff9966); }

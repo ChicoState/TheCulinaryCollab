@@ -15,6 +15,12 @@ const BrowseRecipesPage = () => {
 	const [currentUserEmail, setCurrentEmail] = useState(null);
 	const recipesPerPage = 20;
 
+	const shuffleArray = (array) => {
+		for (let i = array.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[array[i], array[j]] = [array[j], array[i]];
+		}
+	};
 	const fetchRecipes = async () => {
 		const publicRecipesCollection = collection(firestore, 'public-recipes');
 		const userRecipesCollection = collection(firestore, 'allUserRecipes');
@@ -27,7 +33,9 @@ const BrowseRecipesPage = () => {
 		const publicRecipes = publicRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 		const userRecipes = userRecipesSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 
-		setRecipes([...publicRecipes, ...userRecipes]);
+		const combinedRecipes = [...publicRecipes, ...userRecipes];
+		shuffleArray(combinedRecipes);
+		setRecipes(combinedRecipes);
 	};
 
 	const canSaveRecipe = (recipe) => {
@@ -61,19 +69,21 @@ const BrowseRecipesPage = () => {
 		}
 	};
 
-	const renderPaginationButtons = () => {
-		let pages = [];
-		const numPages = Math.ceil(recipes.length / recipesPerPage);
+const renderPaginationButtons = () => {
+    let pages = [];
+    const numPages = Math.ceil(recipes.length / recipesPerPage);
 
-		for (let i = 1; i <= numPages; i++) {
-			if (i === 1 || i === numPages || i === currentPage + 1 || i === currentPage + 2 || i === currentPage) {
-				pages.push(<button key={i} onClick={() => setCurrentPage(i - 1)} className={currentPage === i - 1 ? 'active' : ''}>{i}</button>);
-			} else if (i === currentPage + 3 || i === currentPage - 1) {
-				pages.push(<span key={i}>. . .</span>);
-			}
-		}
-		return pages;
-	};
+    for (let i = 1; i <= numPages; i++) {
+        const buttonClass = currentPage === i - 1 ? 'active-page' : '';
+
+        if (i === 1 || i === numPages || i === currentPage + 1 || i === currentPage + 2 || i === currentPage) {
+            pages.push(<button key={i} onClick={() => setCurrentPage(i - 1)} className={buttonClass}>{i}</button>);
+        } else if (i === currentPage + 3 || i === currentPage - 1) {
+            pages.push(<span key={i}>. . .</span>);
+        }
+    }
+    return pages;
+};
 
 	useEffect(() => {
 		fetchRecipes();
