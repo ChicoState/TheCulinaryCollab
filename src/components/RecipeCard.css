@@ -1,0 +1,9 @@
+.recipe-card2 {
+	text-align: center;
+}
+.recipe-card2 h3 {
+	font-family: 'Roboto', sans-serif;
+      	font-size: 2em;
+	font-weight: 700;
+	line-height: 1.5;
+}

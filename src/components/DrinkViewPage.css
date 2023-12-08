@@ -1,39 +1,69 @@
 .drink-view-page {
-    /* Styles for the drink view page */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.collection-buttons {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
 }
 
 .collection-buttons button {
-    /* Shared button styles */
-    padding: 10px;
-    margin: 5px;
-    border: none;
-    background-color: #f0f0f0;
-    cursor: pointer;
-    /* Etc. */
+	padding: 10px 20px;
+	margin: 0 10px;
+	border: none;
+	background-color: #f0f0f0;
+	cursor: pointer;
+	transition: transform 0.3s ease-in-out;
 }
 
 .collection-buttons button.active {
-    font-weight: bold;
-    font-size: larger;
-    background-color: #c8e6c9; /* Active button color */
+	font-weight: bold;
+	transform: scale(1.1);
+	background-color: #c8e6c9;
 }
 
 .recipe-list {
-    /* Styles for the recipe list */
+	flex-grow: 1;
+	overflow-y: auto;
+	width: 100%;
+	padding: 20px 0;
 }
 
-.recipe-card {
-    /* Styles for individual recipe cards */
-    margin: 10px;
-    padding: 15px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s;
-    cursor: pointer;
+.recipe-list::-webkit-scrollbar,
+.recipe-list::-webkit-scrollbar-thumb,
+.recipe-list::-webkit-scrollbar-track {
+	display: none;
 }
 
-.recipe-card:hover {
-    background-color: #e0e0e0;
+.recipe-card2 {
+	opacity: 0.7;
+	width: 80%;
+	margin: 10px auto;
+	padding: 20px;
+	background-color: #f5f5f5;
+	border-radius: 15px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	transition: transform 0.3s;
+	cursor: pointer;
 }
 
+.recipe-card2.focused {
+	transform: scale(1.05);
+	z-index: 2;
+}
+.recipe-card2:not(.focused) {
+	transform: translateY(0) scale(0.9);
+	opacity: 0.7;
+	z-index: 1;
+}
+.recipe-card2:hover {
+	transform: scale(1.05);
+}
+.inventory-display {
+	justify-content: flex-start;
+}
