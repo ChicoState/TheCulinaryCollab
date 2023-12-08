@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 import './WorkshopPage.css';
 import { firestore, auth } from '../firebase';
@@ -30,6 +31,7 @@ const WorkshopPage = () => {
 	const [selectedRecipeForEdit, setSelectedRecipeForEdit] = useState(null);
 	const [originalCollection, setOriginalCollection] = useState('');
 	const user = auth.currentUser;
+	const navigate = useNavigate();
 	const openAddModal = () => setIsAddModalOpen(true);
 	const closeAddModal = () => setIsAddModalOpen(false);
 	const openViewModal = (recipe) => {
@@ -417,6 +419,12 @@ const WorkshopPage = () => {
 		<DndProvider backend={HTML5Backend}>
 		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
 		<div className="landing-page" style={{backgroundImage: `url(${background})`}}>
+		 {/* Add the "Enter Drink View" button */}
+                <div className="enter-drink-view-section">
+                    <button onClick={() => navigate('/drink-view-page')} >
+                        Enter Drink View
+                    </button>
+                </div>
 		<h1>Welcome {originalUsername}</h1>
 		<RecipeSearchBar
 		publicRecipes={publicRecipes}
