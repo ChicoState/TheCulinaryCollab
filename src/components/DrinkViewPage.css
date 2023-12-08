@@ -70,7 +70,7 @@
 .back-to-workshop-button {
 	position:absolute;
 	top: 21%; 
-	right: 2%;
+	left: 2%;
 	padding: 10px 20px;
 	font-size: 1em;
 	border: none;

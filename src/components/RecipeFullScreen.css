@@ -17,6 +17,11 @@
 	justify-content: center;
 	animation: scaleUp 0.3s forwards;
 	opacity: 0.95;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+.recipe-full-screen::-webkit-scrollbar {
+    display: none;
 }
 
 .close-button {
