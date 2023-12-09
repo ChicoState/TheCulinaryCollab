@@ -4,6 +4,7 @@ import { collection, limit, getDocs, doc, getDoc, addDoc, updateDoc, arrayRemove
 import { ref, getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 import './SocialPage.css';
+import { sendEmailVerification } from 'firebase/auth';
 import { useUnreadMessages } from './UnreadMessagesContext';
 import {motion as m } from "framer-motion";
 //const user = auth.currentUser;
@@ -22,7 +23,18 @@ const SocialPage = () => {
 	const navigate = useNavigate();
 	const defaultProfilePicUrl = 'https://firebasestorage.googleapis.com/v0/b/culinarycollab.appspot.com/o/profilePictures%2FD.png?alt=media&token=a23fae95-8ed6-4c3f-81da-9a49e92aa543';
 
-
+	const resendVerificationEmail = async () => {
+		const user = auth.currentUser;
+		if (user && !user.emailVerified) {
+			try {
+				await sendEmailVerification(user);
+				alert("Verification email sent!");
+			} catch (error) {
+				console.error("Error sending verification email: ", error);
+				alert("Error sending verification email. Please try again later.");
+			}
+		}
+	};
 	const selectChatPartner = async (friend) => {
 		navigate(`/chat/${friend.uid}`);
 
@@ -318,24 +330,27 @@ const SocialPage = () => {
 	);
 
 
-	if (auth.currentUser && !auth.currentUser.emailVerified) {
-		return (
-			<div className="verify-prompt">
-			<h1>Please Verify Your account</h1>
-			<p> Check your email for a verification email to use the website, or reload the page if you have! If you need to resend the email see your profile page.</p>
-			</div>
-		);
-	}
-	if (!auth.currentUser) {
-		return (
-			<div className="login-prompt">
-			<h1>Please Log In</h1>
-			<p>To access this page, you need to be logged in.</p>
+if (!auth.currentUser) {
+    return (
+        <div className="login-prompt">
+            <h1>Please Log In</h1>
+            <p>To access this page, you need to be logged in.</p>
+        </div>
+    );
+} else if (!auth.currentUser.emailVerified) {
+    return (
+        <div className="email-verification-prompt">
+            <h1>Email Verification Required</h1>
+            <p>Your email address has not been verified. Please check your email inbox for the verification link, or click the button below to resend the verification email.</p>
+            <button onClick={resendVerificationEmail}>
+                Resend Verification Email
+            </button>
+        </div>
+    );
+}
 
-			</div>
-		);
-	}
-	return (
+
+return (
 		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
 		<div className="social-page-container">
 		<div className="users-section">

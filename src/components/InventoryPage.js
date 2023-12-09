@@ -3,6 +3,7 @@ import { firestore, auth } from '../firebase';
 import { doc, addDoc, updateDoc, collection, getDocs, deleteDoc } from 'firebase/firestore';
 import { motion as m } from "framer-motion";
 import AddItemModal from './AddItemModal';
+import { sendEmailVerification } from 'firebase/auth';
 import ViewItemModal from './ViewItemModal';
 import EditItemModal from './EditItemModal';
 import './InventoryPage.css';
@@ -30,7 +31,20 @@ const InventoryPage = () => {
 	const [recipes, setRecipes] = useState([]);
 	const [isViewRecipeModalOpen, setIsViewRecipeModalOpen] = useState(false);
 	const [selectedRecipe, setSelectedRecipe] = useState(null);
+	const user = auth.currentUser;
 	const userID = auth.currentUser?.uid;
+	const resendVerificationEmail = async () => {
+		const user = auth.currentUser;
+		if (user && !user.emailVerified) {
+			try {
+				await sendEmailVerification(user);
+				alert("Verification email sent!");
+			} catch (error) {
+				console.error("Error sending verification email: ", error);
+				alert("Error sending verification email. Please try again later.");
+			}
+		}
+	};
 
 	const openViewRecipeModal = (recipe) => {
 		setSelectedRecipe(recipe);
@@ -228,97 +242,116 @@ const InventoryPage = () => {
 		});
 		return recommendations;
 	};
+	if (!auth.currentUser) {
+		return (
+			<div className="login-prompt">
+			<h1>Please Log In</h1>
+			<p>To access this page, you need to be logged in.</p>
+			</div>
+		);
+	} else if (!auth.currentUser.emailVerified) {
+		return (
+			<div className="email-verification-prompt">
+			<h1>Email Verification Required</h1>
+			<p>Your email address has not been verified. Please check your email inbox for the verification link, or click the button below to resend the verification email.</p>
+			<button onClick={resendVerificationEmail}>
+			Resend Verification Email
+			</button>
+			</div>
+		);
+	}
 
 
-return (
-    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75 }}>
-        <div className="inventory-page">
-            <h2>Inventory</h2>
-            <button onClick={openAddItemModal}>Add Item</button>
-            <div className="inventory-display">
-                {inventory.map((item, index) => (
-                    <div
-                        key={index}
-                        className="inventory-item"
-                        onClick={() => handleItemSelect(item)}
-                    >
-                        <p><strong>{item.name}</strong> - {item.quantity}</p>
-                    </div>
-                ))}
-            </div>
-            {isAddItemModalOpen && (
-                <AddItemModal addItem={addItem} closeModal={closeAddItemModal} userID={userID} />
-            )}
-            {isViewItemModalOpen && selectedItem && (
-                <ViewItemModal
-                    item={selectedItem}
-                    onClose={() => setViewItemModalOpen(false)}
-                    onEdit={() => handleItemEdit(selectedItem)}
-                    onDelete={() => handleItemDelete(selectedItem.id)}
-                />
-            )}
-            {isEditItemModalOpen && selectedItem && (
-                <EditItemModal
-                    item={selectedItem}
-                    onClose={() => setEditItemModalOpen(false)}
-                    onUpdate={handleItemUpdate}
-                />
-            )}
 
-            <div className="recipe-recommendations">
-                <h3>Recommended Recipes Based on Your Inventory</h3>
-                <div className="search-section">
+	return (
+		<m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75 }}>
+		<div className="inventory-page">
+		<h2>Inventory</h2>
+		<button onClick={openAddItemModal}>Add Item</button>
+		<div className="inventory-display">
+		{inventory.map((item, index) => (
+			<div
+			key={index}
+			className="inventory-item"
+			onClick={() => handleItemSelect(item)}
+			>
+			<p><strong>{item.name}</strong> - {item.quantity}</p>
+			</div>
+		))}
+		</div>
+		{isAddItemModalOpen && (
+			<AddItemModal addItem={addItem} closeModal={closeAddItemModal} userID={userID} />
+		)}
+		{isViewItemModalOpen && selectedItem && (
+			<ViewItemModal
+			item={selectedItem}
+			onClose={() => setViewItemModalOpen(false)}
+			onEdit={() => handleItemEdit(selectedItem)}
+			onDelete={() => handleItemDelete(selectedItem.id)}
+			/>
+		)}
+		{isEditItemModalOpen && selectedItem && (
+			<EditItemModal
+			item={selectedItem}
+			onClose={() => setEditItemModalOpen(false)}
+			onUpdate={handleItemUpdate}
+			/>
+		)}
 
-                    {/* Search Mode Buttons */}
-                    <div className="search-modes">
-                        <button
-                            onClick={() => setSearchMode("All")}
-                            className={searchMode === "All" ? 'active-search-mode' : ''}
-                        >
-                            All
-                        </button>
-                        <button
-                            onClick={() => setSearchMode("Seasonal")}
-                            className={searchMode === "Seasonal" ? 'active-search-mode' : ''}
-                        >
-                            Seasonal
-                        </button>
-                        <button
-                            onClick={() => setSearchMode("UserCreated")}
-                            className={searchMode === "UserCreated" ? 'active-search-mode' : ''}
-                        >
-                            User Created
-                        </button>
-                    </div>
+		<div className="recipe-recommendations">
+		<h3>Recommended Recipes Based on Your Inventory</h3>
+		<div className="search-section">
 
-                    {/* Search Bar */}
-                    <div className="recipe-search-bar">
-                        <input
-                            type="text"
-                            placeholder="Search recipes..."
-                            value={searchQuery}
-                            onChange={handleSearchChange}
-                            style={{ width: "150px" }}
-                        />
-                    </div>
-                </div>
+		{/* Search Mode Buttons */}
+		<div className="search-modes">
+		<button
+		onClick={() => setSearchMode("All")}
+		className={searchMode === "All" ? 'active-search-mode' : ''}
+		>
+		All
+		</button>
+		<button
+		onClick={() => setSearchMode("Seasonal")}
+		className={searchMode === "Seasonal" ? 'active-search-mode' : ''}
+		>
+		Seasonal
+		</button>
+		<button
+		onClick={() => setSearchMode("UserCreated")}
+		className={searchMode === "UserCreated" ? 'active-search-mode' : ''}
+		>
+		User Created
+		</button>
+		</div>
 
-                <div className="recommended-recipes">
-                    {filteredRecommendedRecipes.map(({ recipe, matchedIngredient }, index) => (
-                        <div key={index} className="recipe-item" onClick={() => openViewRecipeModal(recipe)}>
-                            <h4>{recipe.name}</h4>
-                            <p><strong>Matched based on:</strong> {matchedIngredient}</p>
-                            {recipe.seasons && <p><strong>Seasons:</strong> {recipe.seasons.join(', ')}</p>}
-                            <p><strong>{recipe.createdBy ? `Created by: ${recipe.createdBy.username}` : "Public Recipe"}</strong></p>
-                            <p><strong>Taste:</strong> {recipe.taste}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
+		{/* Search Bar */}
+		<div className="recipe-search-bar">
+		<input
+		type="text"
+		placeholder="Search recipes..."
+		value={searchQuery}
+		onChange={handleSearchChange}
+		style={{ width: "150px" }}
+		/>
+		</div>
+		</div>
 
-            <ViewRecipeModal isOpen={isViewRecipeModalOpen} onClose={closeViewRecipeModal} recipe={selectedRecipe} onSave={() => saveRecipe(selectedRecipe)} showSaveOption={selectedRecipe && canSaveRecipe(selectedRecipe)} />
-        </div>
-    </m.div>
-);
+		<div className="recommended-recipes">
+		{filteredRecommendedRecipes.map(({ recipe, matchedIngredient }, index) => (
+			<div key={index} className="recipe-item" onClick={() => openViewRecipeModal(recipe)}>
+			<h4>{recipe.name}</h4>
+			<p><strong>Matched based on:</strong> {matchedIngredient}</p>
+			{recipe.seasons && <p><strong>Seasons:</strong> {recipe.seasons.join(', ')}</p>}
+			<p><strong>{recipe.createdBy ? `Created by: ${recipe.createdBy.username}` : "Public Recipe"}</strong></p>
+			<p><strong>Taste:</strong> {recipe.taste}</p>
+			</div>
+		))}
+		</div>
+		</div>
+
+		<ViewRecipeModal isOpen={isViewRecipeModalOpen} onClose={closeViewRecipeModal} recipe={selectedRecipe} onSave={() => saveRecipe(selectedRecipe)} showSaveOption={selectedRecipe && canSaveRecipe(selectedRecipe)} />
+		</div>
+		</m.div>
+	);
 }
 export default InventoryPage;

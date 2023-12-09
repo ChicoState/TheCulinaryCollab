@@ -6,6 +6,7 @@ import { firestore, auth } from '../firebase';
 import { addDoc, collection, getDocs, doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { DndProvider, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { sendEmailVerification } from 'firebase/auth';
 import AddRecipeModal from './AddRecipeModal';
 import ViewRecipeModal from './ViewRecipeModal';
 import RecipeSearchBar from './RecipeSearchBar';
@@ -34,6 +35,20 @@ const WorkshopPage = () => {
 	const navigate = useNavigate();
 	const openAddModal = () => setIsAddModalOpen(true);
 	const closeAddModal = () => setIsAddModalOpen(false);
+
+	const resendVerificationEmail = async () => {
+		const user = auth.currentUser;
+		if (user && !user.emailVerified) {
+			try {
+				await sendEmailVerification(user);
+				alert("Verification email sent!");
+			} catch (error) {
+				console.error("Error sending verification email: ", error);
+				alert("Error sending verification email. Please try again later.");
+			}
+		}
+	};
+
 	const openViewModal = (recipe) => {
 		setSelectedRecipe(recipe);
 		setIsViewModalOpen(true);
@@ -417,22 +432,25 @@ const WorkshopPage = () => {
 			</div>
 		);
 	};
-	if (auth.currentUser && !auth.currentUser.emailVerified) {
-		return (
-			<div className="verify-prompt">
-			<h1>Please Verify Your account</h1>
-			<p> Check your email for a verification email to use the website, or reload the page if you have! If you need to resend the email see your profile page.</p>
-			</div>
-		);
-	}
 	if (!auth.currentUser) {
-		return (
-			<div className="login-prompt">
-			<h1>Please Log In</h1>
-			<p>To access this page, you need to be logged in.</p>
-			</div>
-		);
-	}
+    return (
+        <div className="login-prompt">
+            <h1>Please Log In</h1>
+            <p>To access this page, you need to be logged in.</p>
+        </div>
+    );
+} else if (!auth.currentUser.emailVerified) {
+    return (
+        <div className="email-verification-prompt">
+            <h1>Email Verification Required</h1>
+            <p>Your email address has not been verified. Please check your email inbox for the verification link, or click the button below to resend the verification email.</p>
+            <button onClick={resendVerificationEmail}>
+                Resend Verification Email
+            </button>
+        </div>
+    );
+}
+
 	return (
 		<DndProvider backend={HTML5Backend}>
 		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>

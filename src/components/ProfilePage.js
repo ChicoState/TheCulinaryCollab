@@ -82,25 +82,29 @@ const ProfilePage = () => {
 	const paginate = pageNumber => setCurrentPage(pageNumber);
 
 	const renderPaginationButtons = () => {
-		const pageNumbers = [];
-		for (let i = 1; i <= Math.ceil(personalRecipes.length / recipesPerPage); i++) {
-			pageNumbers.push(i);
-		}
-		return (
-			<div className="pagination">
-			<button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
-			Previous
-			</button>
-			{pageNumbers.map(number => (
-				<button key={number} onClick={() => paginate(number)} className={currentPage === number ? 'active' : ''}>
-				{number}
+		if (personalRecipes.length > 0) {
+			const pageNumbers = [];
+			for (let i = 1; i <= Math.ceil(personalRecipes.length / recipesPerPage); i++) {
+				pageNumbers.push(i);
+			}
+			return (
+				<div className="pagination">
+				<button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1}>
+				Previous
 				</button>
-			))}
-			<button onClick={() => paginate(currentPage + 1)} disabled={currentPage === pageNumbers.length}>
-			Next
-			</button>
-			</div>
-		);
+				{pageNumbers.map(number => (
+					<button key={number} onClick={() => paginate(number)} className={currentPage === number ? 'active' : ''}>
+					{number}
+					</button>
+				))}
+				<button onClick={() => paginate(currentPage + 1)} disabled={currentPage === pageNumbers.length}>
+				Next
+				</button>
+				</div>
+			);
+		} else {
+			return null;
+		}
 	};
 	const handleProfilePicChange = async (e) => {
 		const file = e.target.files[0];
@@ -127,6 +131,16 @@ const ProfilePage = () => {
 			<div className="login-prompt">
 			<h1>Please Log In</h1>
 			<p>To access this page, you need to be logged in.</p>
+			</div>
+		);
+	} else if (!auth.currentUser.emailVerified) { 
+		return (
+			<div className="email-verification-prompt">
+			<h1>Email Verification Required</h1>
+			<p>Your email address has not been verified. Please check your email inbox for the verification link, or click the button below to resend the verification email.</p>
+			<button onClick={resendVerificationEmail}>
+			Resend Verification Email
+			</button>
 			</div>
 		);
 	}
@@ -172,11 +186,17 @@ const ProfilePage = () => {
 		) : (
 			<>
 			<p className={`bio-content ${!bio && 'bio-empty'}`}>
-			{bio || 'No bio set'}
+			{bio.split('\n').map((line, index) => (
+				<React.Fragment key={index}>
+				{line}
+				<br />
+				</React.Fragment>
+			))}
 			</p>
 			<button onClick={handleEditBio}>Edit</button>
 			</>
 		)}
+
 		</div>
 		<div className="personal-recipes-grid">
 		{currentRecipes.map(recipe => (
