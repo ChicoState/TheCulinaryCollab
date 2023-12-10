@@ -24,19 +24,18 @@
 
 .landing-content {
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    text-align: center; /* Fallback for older browsers */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     flex: 1;
     padding: 20px 0;
 }
 
 .landing-image {
-    width: 70%; /* Adjust the width as needed */
-    height: auto; /* Maintains aspect ratio */
-    border-radius: 8px; /* Optional: Rounded corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Box shadow for image */
-  /* Any additional styling you want for the image */
+    width: 70%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .about-content {
     display: flex;
@@ -58,3 +57,12 @@ h1 {
     max-width: 600px;
     max-height: 120px;
 }
+
+.welcome-message {
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'Arial', sans-serif;
+    font-size: 1em;
+    color: #333;
+}
+

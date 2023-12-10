@@ -49,11 +49,10 @@ const AddRecipeModal = ({ isOpen, onClose, addRecipe }) => {
                 onClose();
         };
 
-        return (
-                <div className={`modal ${isOpen ? 'open' : ''}`}>
-                <div className="modal-content">
-            
-		<form onSubmit={handleSubmit}>
+return (
+    <div className={`modal ${isOpen ? 'open' : ''}`}>
+        <div className="modal-content">
+            <form onSubmit={handleSubmit}>
                 <label>Name</label>
                 <input type="text" ref={nameRef} required />
 
@@ -65,57 +64,56 @@ const AddRecipeModal = ({ isOpen, onClose, addRecipe }) => {
 
                 <label>Ingredients</label>
                 {ingredients.map((ingredient, index) => (
-                        <div key={index} className="ingredient-input">
+                    <div key={index} className="ingredient-input">
                         <div className="ingredient-row">
-                        <input
-                        type="text"
-                        placeholder="Ingredient"
-                        value={ingredient.ingredient}
-                        onChange={(e) => handleIngredientChange(index, 'ingredient', e.target.value)}
-                        />
-                        <input
-                        type="text"
-                        placeholder="Amount"
-                        value={ingredient.amount}
-                        onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
-                        />
-                        <input
-                        type="text"
-                        placeholder="Unit"
-                        value={ingredient.unit}
-                        onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
-                        />
+                            <input
+                                type="text"
+                                placeholder="Ingredient"
+                                value={ingredient.ingredient}
+                                onChange={(e) => handleIngredientChange(index, 'ingredient', e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                placeholder="Amount"
+                                value={ingredient.amount}
+                                onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
+                            />
+                            <input
+                                type="text"
+                                placeholder="Unit"
+                                value={ingredient.unit}
+                                onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
+                            />
                         </div>
                         <button type="button" onClick={() => handleRemoveIngredient(index)}>
-                        Remove
+                            Remove
                         </button>
-                        </div>
+                    </div>
                 ))}
                 <button type="button" onClick={handleAddIngredient}>
-                Add Ingredient
+                    Add Ingredient
                 </button>
+                <div className="spacing-div"></div>
 
                 <label>Preparation</label>
+                <div className="spacing-div"></div>
                 <textarea rows="4" ref={preparationRef} required />
+                <div className="spacing-div"></div>
+
                 <label>Cost</label>
                 <input type="text" ref={costRef} />
 
                 <label>Time to Make</label>
                 <input type="text" ref={timeToMakeRef} />
+
                 <div className="button-row">
-                <div className="back-button">
-                <button type="button" onClick={onClose}>
-                Back
-                </button>
+                    <button type="button" onClick={onClose}>Back</button>
+                    <button type="submit">Save</button>
                 </div>
-                <div className="save-button">
-                <button type="submit">Save</button>
-                </div>
-                </div>
-                </form>
-                </div>
-                </div>
-        );
+            </form>
+        </div>
+    </div>
+);
 
 };
 

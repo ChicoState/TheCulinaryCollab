@@ -68,8 +68,8 @@ return (
                 </button>
                 <div className={`dropdown-content ${showDrinksDropdown ? 'show' : 'show'}`}>
                     <Link to="/workshop">My Drinks</Link>
-                    <Link to="/browse">Browse Public Recipes</Link>
-                    <Link to="/inventory-page">Inventory Page</Link>
+                    <Link to="/browse">Browse Recipes</Link>
+                    <Link to="/inventory-page">My Inventory Page</Link>
                 </div>
             </div>
             {isLoggedIn ? (

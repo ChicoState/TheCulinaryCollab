@@ -71,6 +71,9 @@ const UserProfilePage = () => {
 	const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 	const renderPaginationButtons = () => {
+		if (personalRecipes.length === 0) {
+			return null;
+		}
 		const pageNumbers = [];
 		for (let i = 1; i <= Math.ceil(personalRecipes.length / recipesPerPage); i++) {
 			pageNumbers.push(i);
@@ -169,7 +172,6 @@ const UserProfilePage = () => {
 		try {
 			const savedRecipesRef = collection(firestore, `users/${user.uid}/savedRecipes`);
 			await addDoc(savedRecipesRef, extendedRecipeData);
-			alert('Recipe saved successfully!');
 		} catch (error) {
 			alert('Error saving recipe: ', error);
 		}
