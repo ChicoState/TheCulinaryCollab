@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { firestore, storage, auth } from '../firebase';
-import { collection, limit, getDocs, doc, getDoc, addDoc, updateDoc, arrayRemove, arrayUnion, runTransaction, query, where, orderBy } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, addDoc, updateDoc, arrayRemove, arrayUnion, runTransaction, query, where, orderBy } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 import './SocialPage.css';
-import { useUnreadMessages } from './UnreadMessagesContext';
-import {motion as m } from "framer-motion";
-//const user = auth.currentUser;
 const SocialPage = () => {
 	const [users, setUsers] = useState([]);
 	const [searchTerm, setSearchTerm] = useState('');
@@ -17,26 +14,13 @@ const SocialPage = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [currentMessage, setCurrentMessage] = useState('');
 	const [messages, setMessages] = useState([]);
-	const { friendsWithUnreadMessages, setFriendsWithUnreadMessages } = useUnreadMessages();
 	const [currentChatPartner, setCurrentChatPartner] = useState(null);
 	const navigate = useNavigate();
 	const defaultProfilePicUrl = 'https://firebasestorage.googleapis.com/v0/b/culinarycollab.appspot.com/o/profilePictures%2FD.png?alt=media&token=a23fae95-8ed6-4c3f-81da-9a49e92aa543';
 
 
-	const selectChatPartner = async (friend) => {
+	const selectChatPartner = (friend) => {
 		navigate(`/chat/${friend.uid}`);
-
-		const userRef = doc(firestore, 'users', auth.currentUser.uid);
-		await updateDoc(userRef, {
-			[`lastReadTimestamp.${friend.uid}`]: new Date()
-		});
-
-		await fetchMessagesForChat(friend);
-		setFriendsWithUnreadMessages(prev => {
-			const updated = new Set(prev);
-			updated.delete(friend.uid);
-			return updated;
-		});
 	};
 
 	const sendMessage = async () => {
@@ -161,91 +145,16 @@ const SocialPage = () => {
 			const fetchedMessages = querySnapshot.docs.map(doc => doc.data());
 			setMessages(fetchedMessages);
 		};
-		/*
-		const checkForUnreadMessages = async () => {
-			let updatedFriendsWithUnread = new Set(friendsWithUnreadMessages);
-			const currentUserRef = doc(firestore, 'users', auth.currentUser.uid);
-			const currentUserSnap = await getDoc(currentUserRef);
-			if (!currentUserSnap.exists()) {
-				console.log('No such document!');
-				return;
-			}
 
-			const lastReadTimestamps = currentUserSnap.data().lastReadTimestamp || {};
-			friends.forEach(async (friend) => {
-				const lastRead = lastReadTimestamps[friend.uid] || new Date(0); 
-				const messagesQuery = query(
-					collection(firestore, 'messages'),
-					where('senderId', '==', friend.uid),
-					where('receiverId', '==', auth.currentUser.uid),
-					orderBy('timestamp', 'desc'),
-					limit(1)
-				);
-				const latestMessageSnap = await getDocs(messagesQuery);
-				if (!latestMessageSnap.empty) {
-					const latestMessage = latestMessageSnap.docs[0].data();
-					if (latestMessage.timestamp.toDate() > lastRead) {
-						updatedFriendsWithUnread.add(friend.uid);
-					} else {
-						updatedFriendsWithUnread.delete(friend.uid);
-					}
-				}
-			});
-			setFriendsWithUnreadMessages(updatedFriendsWithUnread);
-		};
-
-		checkForUnreadMessages().catch(console.error);
-		*/
 		fetchMessages();
 		fetchUsers();
 		fetchFriendRequests();
-	}, [friends]);
-
-
-	useEffect(() => {
-		const checkForUnreadMessages = async () => {
-			if (!auth.currentUser) {
-				console.log('User is logged out');
-				return;
-			}
-			let updatedFriendsWithUnread = new Set(friendsWithUnreadMessages);
-			const currentUserRef = doc(firestore, 'users', auth.currentUser.uid);
-			const currentUserSnap = await getDoc(currentUserRef);
-			if (!currentUserSnap.exists()) {
-				console.log('No such document!');
-				return;
-			}
-
-			const lastReadTimestamps = currentUserSnap.data().lastReadTimestamp || {};
-			friends.forEach(async (friend) => {
-				const lastRead = lastReadTimestamps[friend.uid] || new Date(0);
-				const messagesQuery = query(
-					collection(firestore, 'messages'),
-					where('senderId', '==', friend.uid),
-					where('receiverId', '==', auth.currentUser.uid),
-					orderBy('timestamp', 'desc'),
-					limit(1)
-				);
-				const latestMessageSnap = await getDocs(messagesQuery);
-				if (!latestMessageSnap.empty) {
-					const latestMessage = latestMessageSnap.docs[0].data();
-					if (latestMessage.timestamp.toDate() > lastRead) {
-						updatedFriendsWithUnread.add(friend.uid);
-					} else {
-						updatedFriendsWithUnread.delete(friend.uid);
-					}
-				}
-			});
-			setFriendsWithUnreadMessages(updatedFriendsWithUnread);
-		};
-
-		checkForUnreadMessages().catch(console.error);
-	}, [friends, friendsWithUnreadMessages]);
+	}, []);
 
 	const handleAccept = async (requestingUserid) => {
-		//console.log("handle accept called <---");
-		//console.log("Current user: ", auth.currentUser);
-		//console.log("Requesting user: ", requestingUserid);
+		console.log("handle accept called <---");
+		console.log("Current user: ", auth.currentUser);
+		console.log("Requesting user: ", requestingUserid);
 		const currentUserid = auth.currentUser.uid;
 
 		const currentUserRef = doc(firestore, 'users', currentUserid);
@@ -269,7 +178,7 @@ const SocialPage = () => {
 					friendsList: arrayUnion(currentUserid)
 				});
 			});
-			alert("Friend request accepted!");
+			console.log("Friend request accepted");
 			setFriendRequests(friendRequests.filter(req => req.uid !== requestingUserid));
 			const newFriendData = {
 				uid: requestingUserid,
@@ -278,32 +187,30 @@ const SocialPage = () => {
 			};
 			setFriends([...friends, newFriendData]);
 		} catch (error) {
-			alert("Error accepting friend request: ", error);
+			console.error("Error accepting friend request: ", error);
 		}
 	};
 
 
-	const handleReject = async (requestingUser) => {
+	const handleReject = async (requestingUserId) => {
 		const currentUserRef = doc(firestore, 'users', auth.currentUser.uid);
 		try {
 			const currentUserSnap = await getDoc(currentUserRef);
 			if (currentUserSnap.exists()) {
 				const currentUserData = currentUserSnap.data();
-				const updatedFriendRequests = currentUserData.friendRequests.filter(request => request.uid !== requestingUser.uid);
+				const updatedFriendRequests = currentUserData.friendRequests.filter(request => request.uid !== requestingUserId);
 
 				await updateDoc(currentUserRef, {
 					friendRequests: updatedFriendRequests
 				});
+				setFriendRequests(updatedFriendRequests);
 
-
-				setFriendRequests(prevRequests => prevRequests.filter(req => req.uid !== requestingUser.uid));
-
-				alert("Friend request rejected");
+				console.log("Friend request rejected");
 			} else {
-				alert("Current user document not found");
+				console.log("Current user document not found");
 			}
 		} catch (error) {
-			alert("Error rejecting friend request: ", error);
+			console.error("Error rejecting friend request: ", error);
 		}
 	};
 
@@ -317,26 +224,7 @@ const SocialPage = () => {
 		user.username.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
-
-	if (auth.currentUser && !auth.currentUser.emailVerified) {
-		return (
-			<div className="verify-prompt">
-			<h1>Please Verify Your account</h1>
-			<p> Check your email for a verification email to use the website, or reload the page if you have! If you need to resend the email see your profile page.</p>
-			</div>
-		);
-	}
-	if (!auth.currentUser) {
-		return (
-			<div className="login-prompt">
-			<h1>Please Log In</h1>
-			<p>To access this page, you need to be logged in.</p>
-
-			</div>
-		);
-	}
 	return (
-		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
 		<div className="social-page-container">
 		<div className="users-section">
 		<h1>All Users</h1>
@@ -358,42 +246,43 @@ const SocialPage = () => {
 
 
 		</div>
-		{/* Friend Requests section */}
+		{/* Friends request section */}
 		<div className="friend-requests-section">
-		<button onClick={() => setShowDropdown(!showDropdown)}>
-		Friend Requests ({friendRequests.length})
-		</button>
+		<button onClick={() => setShowDropdown(!showDropdown)}>Friend Requests</button>
 		{showDropdown && (
 			<div className="friend-requests-dropdown">
 			<ul>
 			{friendRequests.map((request, index) => (
 				<li key={index}>
 				{request.username}
-				{/* Accept Reject button section */}
 				<button onClick={() => handleAccept(request.uid)}>Accept</button>
-				<button onClick={() => handleReject(request)}>Reject</button>
+				<button onClick={() => handleReject(request.uid)}>Reject</button>
 				</li>
 			))}
 			</ul>
 			</div>
 		)}
+
 		</div>
 		{/* Friends list */}
 		<div className="friends-list">
-		<h2>My Friends</h2>
+		<h1>My Friends</h1>
+		<input
+		type="text"
+		placeholder="Search Friends..."
+		/>
+		<div className="friends-container">
+
+
+		</div>
 		<ul>
 		{friends.map((friend) => (
-			<li 
-			key={friend.uid} 
-			className={`friend-item ${friendsWithUnreadMessages.has(friend.uid) ? 'bold' : ''}`} 
-			onClick={() => selectChatPartner(friend)}
-			>
+			<li key={friend.uid} className="friend-item" onClick={() => selectChatPartner(friend)}>
 			<span className="friend-username">{friend.username}</span>
 			<img src={friend.profilePic} alt={`${friend.username}'s profile`} className="friend-profile-picture" />
 			</li>
 		))}
 		</ul>
-
 		</div>
 		{/* Messaging interface */}
 		<div className="messaging-interface">
@@ -411,9 +300,7 @@ const SocialPage = () => {
 			<button onClick={sendMessage}>Send</button>
 			</>
 		)}
-		</div>              
-		</div>
-		</m.div>
+		</div>              </div>
 	);
 };
 
