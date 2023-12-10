@@ -34,15 +34,16 @@
     padding: 10px 20px;
     font-size: 1.2rem;
     border: none;
-    background: #E0E8F5;  
+    background-color: #FFD500;
     border-radius: 5px;
     font-family: 'Arial', sans-serif;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, 0s background;
 }
 
 .navigation button:hover {
     background: rgba(255, 255, 255, 0.9);
+    transition-delay: .2s;
 }
 
 .dropdown {
