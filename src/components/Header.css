@@ -43,7 +43,7 @@
 
 .navigation button:hover {
     background: rgba(255, 255, 255, 0.9);
-    transition-delay: .2s;
+    transition-delay: .005  s;
 }
 
 .dropdown {
@@ -57,14 +57,16 @@
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  visibility: hidden;
   opacity: 0;
   transform: translateY(-20px);
-  transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+  transition: opacity 200ms ease-in-out, visibility 200ms ease-in-out, transform 200ms ease-in-out;
 }
 
 .dropdown > .button-text-black:focus + .dropdown-content.show {
-  opacity: 1;
-  transform: translateY(0);
+	visibility: visible;
+	opacity: 1;
+	transform: translateY(0);
 }
 
 .dropdown-content a {
