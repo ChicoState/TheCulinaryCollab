@@ -71,14 +71,14 @@ useEffect(() => {
 		
 		<div className="modal-content">
 		<form onSubmit={handleSubmit}>
-		<label>Name</label>
-		<input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+		<label htmlFor="name">Name</label>
+		<input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
 
-		<label>Timing</label>
-		<input type="text" value={timing} onChange={(e) => setTiming(e.target.value)} required />
+		<label htmlFor='timing'>Timing</label>
+		<input type="text" id='timing' value={timing} onChange={(e) => setTiming(e.target.value)} required />
 
-		<label>Taste</label>
-		<input type="text" value={taste} onChange={(e) => setTaste(e.target.value)} required />
+		<label htmlFor="taste">Taste</label>
+		<input type="text" id="taste" value={taste} onChange={(e) => setTaste(e.target.value)} required />
 
 		<label>Ingredients</label>
 		{ingredients.map((ingredient, index) => (

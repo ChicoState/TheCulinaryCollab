@@ -1,0 +1,2338 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 1`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 2`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 3`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 4`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 5`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 6`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 7`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 8`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 9`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 10`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 11`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 12`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 13`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 14`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 15`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 16`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 17`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 18`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ViewPersonalRecipeModal renders the component with a recipe 19`] = `
+<div>
+  <div
+    class="modal open"
+  >
+    <div
+      class="modal-content"
+    >
+      <button
+        class="edit-button"
+      >
+        Edit
+      </button>
+      <div
+        class="average-rating-section"
+      >
+        <p>
+          Average Rating: 
+          <div
+            class="star-rating"
+          >
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+            <span
+              class="star "
+            >
+              ★
+            </span>
+          </div>
+          <span
+            class="ratings-count"
+          >
+             (
+            0
+             Ratings)
+          </span>
+        </p>
+        <div
+          class="comments-toggle"
+        >
+          <button>
+            Show Comments (
+            0
+            )
+          </button>
+        </div>
+      </div>
+      <h2>
+        Rusty Nail
+      </h2>
+      <p>
+        <strong>
+          Timing:
+        </strong>
+         
+        After dinner
+      </p>
+      <p>
+        <strong>
+          Taste:
+        </strong>
+         
+        Boozy
+      </p>
+      <p>
+        <strong>
+          Ingredients:
+        </strong>
+      </p>
+      <ul>
+        <li>
+          Scotch Whisky
+           (
+          4.5
+           
+          cl
+          )
+        </li>
+        <li>
+          Drambuie
+           (
+          2.5
+           
+          cl
+          )
+        </li>
+      </ul>
+      <p>
+        <strong>
+          Preparation:
+        </strong>
+         
+        Stirred
+      </p>
+      <button>
+        Delete
+      </button>
+      <button>
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+`;

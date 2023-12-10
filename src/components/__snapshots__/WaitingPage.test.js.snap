@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<WaitingPage> should render component 1`] = `
+<div>
+  <h2>
+    Please wait while we verify your email...
+  </h2>
+</div>
+`;

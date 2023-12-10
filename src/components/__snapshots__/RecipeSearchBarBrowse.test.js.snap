@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecipeSearchBarBrowse renders the component 1`] = `
+<div>
+  <div>
+    <div
+      class="search-bar-container"
+    >
+      <input
+        class="search-bar"
+        placeholder="Search for recipe"
+        type="text"
+        value=""
+      />
+    </div>
+    <ul
+      class="search-results-list"
+    />
+  </div>
+</div>
+`;
