@@ -1,4 +1,6 @@
 ### Culinary Collab
+[![Cypress Tests](https://github.com/ChicoState/TheCulinaryCollab/actions/workflows/cypress.yml/badge.svg)](https://github.com/ChicoState/TheCulinaryCollab/actions/workflows/cypress.yml)
+
 MIT License
 
 Copyright (c) Meta Platforms, Inc. and affiliates.
