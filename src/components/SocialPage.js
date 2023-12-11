@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { firestore, storage, auth } from '../firebase';
 import { collection, getDocs, doc, getDoc, addDoc, updateDoc, arrayRemove, arrayUnion, runTransaction, query, where, orderBy } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
+import { sendEmailVerification } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import './SocialPage.css';
 const SocialPage = () => {
@@ -20,6 +21,56 @@ const SocialPage = () => {
 	const navigate = useNavigate();
 	const defaultProfilePicUrl = 'https://firebasestorage.googleapis.com/v0/b/culinarycollab.appspot.com/o/profilePictures%2FD.png?alt=media&token=a23fae95-8ed6-4c3f-81da-9a49e92aa543';
 
+	const resendVerificationEmail = async () => {
+		const user = auth.currentUser;
+		if (user && !user.emailVerified) {
+			try {
+				await sendEmailVerification(user);
+				alert("Verification email sent!");
+			} catch (error) {
+				console.error("Error sending verification email: ", error);
+				alert("Error sending verification email. Please try again later.");
+			}
+		}
+	};
+	const fetchFriendsList = async () => {
+		if (auth.currentUser) {
+			const userRef = doc(firestore, 'users', auth.currentUser.uid);
+			try {
+				const userSnap = await getDoc(userRef);
+				if (userSnap.exists() && userSnap.data().friendsList) {
+
+					const friendsUids = userSnap.data().friendsList;
+					const friendsPromises = friendsUids.map(async (friendUid) => {
+						const friendSnap = await getDoc(doc(firestore, 'users', friendUid));
+						if (friendSnap.exists()) {
+
+							let profilePicUrl = defaultProfilePicUrl;
+							try {
+								const profilePicRef = ref(storage, `profilePictures/${friendUid}`);
+								profilePicUrl = await getDownloadURL(profilePicRef);
+							} catch (error) {
+								console.error('Error fetching profile picture for friend:', error);
+
+							}
+							return {
+								uid: friendUid,
+								username: friendSnap.data().username,
+								profilePic: profilePicUrl
+							};
+						} else {
+							return null;
+						}
+					});
+
+					const friendsData = await Promise.all(friendsPromises);
+					setFriends(friendsData.filter(Boolean));
+				}
+			} catch (error) {
+				console.error('Error fetching friends list:', error);
+			}
+		}
+	};
 
 	const selectChatPartner = (friend) => {
 		navigate(`/chat/${friend.uid}`);
@@ -94,44 +145,6 @@ const SocialPage = () => {
 				console.error('Error fetching users:', error);
 			}
 		};
-		const fetchFriendsList = async () => {
-			if (auth.currentUser) {
-				const userRef = doc(firestore, 'users', auth.currentUser.uid);
-				try {
-					const userSnap = await getDoc(userRef);
-					if (userSnap.exists() && userSnap.data().friendsList) {
-
-						const friendsUids = userSnap.data().friendsList;
-						const friendsPromises = friendsUids.map(async (friendUid) => {
-							const friendSnap = await getDoc(doc(firestore, 'users', friendUid));
-							if (friendSnap.exists()) {
-
-								let profilePicUrl = defaultProfilePicUrl;
-								try {
-									const profilePicRef = ref(storage, `profilePictures/${friendUid}`);
-									profilePicUrl = await getDownloadURL(profilePicRef);
-								} catch (error) {
-									console.error('Error fetching profile picture for friend:', error);
-
-								}
-								return {
-									uid: friendUid,
-									username: friendSnap.data().username,
-									profilePic: profilePicUrl
-								};
-							} else {
-								return null;
-							}
-						});
-
-						const friendsData = await Promise.all(friendsPromises);
-						setFriends(friendsData.filter(Boolean));
-					}
-				} catch (error) {
-					console.error('Error fetching friends list:', error);
-				}
-			}
-		};
 
 
 		fetchFriendsList();
@@ -186,7 +199,7 @@ const SocialPage = () => {
 					friendsList: arrayUnion(currentUserid)
 				});
 			});
-			console.log("Friend request accepted");
+			alert("Friend request accepted");
 			setFriendRequests(friendRequests.filter(req => req.uid !== requestingUserid));
 			const newFriendData = {
 				uid: requestingUserid,
@@ -194,6 +207,7 @@ const SocialPage = () => {
 				profilePic: requestingUserid.profilePic || defaultProfilePicUrl
 			};
 			setFriends([...friends, newFriendData]);
+			fetchFriendsList();
 		} catch (error) {
 			console.error("Error accepting friend request: ", error);
 		}
@@ -213,7 +227,7 @@ const SocialPage = () => {
 				});
 				setFriendRequests(updatedFriendRequests);
 
-				console.log("Friend request rejected");
+				alert("Friend request rejected");
 			} else {
 				console.log("Current user document not found");
 			}
@@ -231,7 +245,24 @@ const SocialPage = () => {
 	const filteredUsers = users.filter(user =>
 		user.username.toLowerCase().includes(searchTerm.toLowerCase())
 	);
-
+	if (!auth.currentUser) {
+		return (
+			<div className="login-prompt">
+			<h1>Please Log In</h1>
+			<p>To access this page, you need to be logged in.</p>
+			</div>
+		);
+	} else if (!auth.currentUser.emailVerified) {
+		return (
+			<div className="email-verification-prompt">
+			<h1>Email Verification Required</h1>
+			<p>Your email address has not been verified. Please check your email inbox for the verification link, or click the button below to resend the verification email.</p>
+			<button onClick={resendVerificationEmail}>
+			Resend Verification Email
+			</button>
+			</div>
+		);
+	}
 	return (
 		<div className="social-page-container">
 		<div className="users-section">
