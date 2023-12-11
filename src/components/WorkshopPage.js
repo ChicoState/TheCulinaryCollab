@@ -35,7 +35,8 @@ const WorkshopPage = () => {
 	const navigate = useNavigate();
 	const openAddModal = () => setIsAddModalOpen(true);
 	const closeAddModal = () => setIsAddModalOpen(false);
-
+	
+	
 	const resendVerificationEmail = async () => {
 		const user = auth.currentUser;
 		if (user && !user.emailVerified) {
@@ -115,7 +116,7 @@ const WorkshopPage = () => {
 			if (auth.currentUser) {
 				const savedRecipesRef = collection(firestore, `users/${auth.currentUser.uid}/savedRecipes`);
 				await addDoc(savedRecipesRef, recipe);
-				alert('Recipe saved successfully!');
+				//alert('Recipe saved successfully!');
 				fetchSavedRecipes();
 			}
 		} catch (error) {
@@ -451,6 +452,7 @@ const WorkshopPage = () => {
     );
 }
 
+
 	return (
 		<DndProvider backend={HTML5Backend}>
 		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
@@ -465,6 +467,7 @@ const WorkshopPage = () => {
 		publicRecipes={publicRecipes}
 		personalRecipes={personalRecipes}
 		savedRecipes={savedRecipes}
+		profileDisplayRecipes={profileDisplayRecipes}
 		onView={openViewModal}
 		/>
 		<button onClick={openAddModal}>Add Recipe</button>
@@ -477,6 +480,9 @@ const WorkshopPage = () => {
 		<div className="content-area">
 		{/* Recipes Display */}
 		<div className="recipes-display">
+		<div className="delete-area">
+		<TrashBox />
+		</div>
 		<div className="collection-box">
 		<Collection
 		recipes={allUserRecipes.filter(recipe => recipe.createdBy.uid === auth.currentUser.uid)}
@@ -486,10 +492,6 @@ const WorkshopPage = () => {
 		</div>
 		</div>
 
-		{/* Trash Bin*/}
-		<div className="delete-area">
-		<TrashBox />
-		</div>
 		</div> 
 		{/* Public recipes */}
 		<div className="collection-box">

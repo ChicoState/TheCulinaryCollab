@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './RecipeSearchBar.css';
-const RecipeSearchBar = ({personalRecipes, savedRecipes, publicRecipes, onView }) => {
+const RecipeSearchBar = ({personalRecipes, savedRecipes, publicRecipes, profileDisplayRecipes, onView }) => {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
 
@@ -17,7 +17,7 @@ const RecipeSearchBar = ({personalRecipes, savedRecipes, publicRecipes, onView }
 		}
 		else {
 			const lowercasedTerm = searchTerm.toLowerCase();
-			const allRecipes = [...personalRecipes, ...savedRecipes, ...publicRecipes];
+			const allRecipes = [...personalRecipes, ...savedRecipes, ...publicRecipes, ...profileDisplayRecipes];
 			const filtered = allRecipes.filter(recipe => {
 				const recipeName = recipe.name ? recipe.name.toLowerCase() : '';
 				const ingredientsMatch = recipe.ingredients ? recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(lowercasedTerm)) : false;
@@ -49,11 +49,9 @@ const RecipeSearchBar = ({personalRecipes, savedRecipes, publicRecipes, onView }
 			<button onClick={() => onView(recipe)} className="view-recipe-button">
 			View
 			</button>
-			{isPersonalRecipe(recipe) ? 
-				<span className="recipe-creator"> Created by you</span> :
-				(recipe.createdBy && recipe.createdBy.username && 
-					<span className="recipe-creator"> Created by {recipe.createdBy.username}</span>)
-			}
+			{recipe.createdBy && recipe.createdBy.username && (
+				<span className="recipe-creator"> Created by {recipe.createdBy.username}</span>
+			)}
 			</li>
 		))}
 		</ul>

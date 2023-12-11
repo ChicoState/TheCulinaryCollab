@@ -10,10 +10,68 @@ import './InventoryPage.css';
 import ViewRecipeModal from './ViewRecipeModal';
 
 const seasonalIngredients = {
-	Spring: [ 'basil', 'thyme', 'strawberry', 'raspberry', 'lemon', 'lime', 'rhubarb', 'elderflower', 'lavender', 'chamomile', 'honey', 'green tea'],
-	Summer: ['watermelon', 'pineapple', 'mango', 'peach', 'citrus', 'cilantro', 'lemongrass', 'coconut', 'passionfruit', 'kiwi', 'blueberry', 'blackberry', 'raspberry'],
-	Autumn: ['cinnamon', 'nutmeg', 'allspice', 'ginger', 'star anise', 'apple', 'pear', 'pomegranate', 'fig', 'cranberry', 'walnut', 'hazelnut', 'pumpkin', 'maple syrup', 'caramel'],
-	Winter: ['Mint leaves','orange', 'grapefruit', 'blood orange', 'lemon', 'cinnamon', 'clove', 'star anise', 'nutmeg', 'peppermint', 'chocolate', 'coffee', 'cream', 'vanilla']
+	Spring: [ 
+		'basil',
+		'thyme',
+		'strawberry',
+		'raspberry',
+		'lemon',
+		'lime',
+		'rhubarb', 
+		'elderflower',
+		'lavender', 
+		'chamomile', 
+		'honey',
+		'green tea'
+	],
+	Summer: [
+		'watermelon', 
+		'pineapple',
+		'mango', 
+		'peach',
+		'citrus',
+		'cilantro', 
+		'lemongrass', 
+		'coconut',
+		'passionfruit',
+		'kiwi', 
+		'blueberry',
+		'blackberry', 
+		'raspberry'
+	],
+	Autumn: [
+		'cinnamon',
+		'nutmeg',
+		'allspice', 
+		'ginger',
+		'star anise', 
+		'apple',
+		'pear', 
+		'pomegranate', 
+		'fig', 
+		'cranberry',
+		'walnut', 
+		'hazelnut', 
+		'pumpkin',
+		'maple',
+		'caramel'
+	],
+	Winter: [
+		'mint',
+		'orange',
+		'grapefruit',
+		'blood orange',
+		'lemon',
+		'cinnamon',
+		'clove', 
+		'star anise', 
+		'nutmeg',
+		'peppermint',
+		'chocolate',
+		'coffee',
+		'cream',
+		'vanilla'
+	]
 };
 
 
@@ -125,7 +183,8 @@ const InventoryPage = () => {
 	useEffect(() => {
 		if (searchQuery.length >= 2) {
 			setFilteredRecommendedRecipes(recommendedRecipes.filter(({ recipe }) =>
-				recipe.name.toLowerCase().includes(searchQuery)
+				recipe.name.toLowerCase().includes(searchQuery) || 
+				recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(searchQuery))
 			));
 		} else {
 			setFilteredRecommendedRecipes(recommendedRecipes);
@@ -233,15 +292,20 @@ const InventoryPage = () => {
 
 	const recommendRecipes = (inventory, allRecipes) => {
 		let recommendations = [];
-		inventory.forEach(item => {
-			allRecipes.forEach(recipe => {
-				if (recipe.ingredients.some(ing => ing.ingredient.toLowerCase() === item.name.toLowerCase())) {
-					recommendations.push({ recipe, matchedIngredient: item.name });
-				}
-			});
+		allRecipes.forEach(recipe => {
+			let matches = inventory.filter(inventoryItem => {
+				return recipe.ingredients.some(ingredient => {
+					return ingredient.ingredient.toLowerCase().includes(inventoryItem.name.toLowerCase());
+				});
+			}).map(item => item.name);
+
+			if (matches.length > 0) {
+				recommendations.push({ recipe, matchedIngredients: matches });
+			}
 		});
 		return recommendations;
 	};
+
 	if (!auth.currentUser) {
 		return (
 			<div className="login-prompt">
@@ -262,12 +326,12 @@ const InventoryPage = () => {
 	}
 
 
-
 	return (
 		<m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75 }}>
 		<div className="inventory-page">
 		<h2>Inventory</h2>
 		<button onClick={openAddItemModal}>Add Item</button>
+
 		<div className="inventory-display">
 		{inventory.map((item, index) => (
 			<div
@@ -279,9 +343,11 @@ const InventoryPage = () => {
 			</div>
 		))}
 		</div>
+
 		{isAddItemModalOpen && (
 			<AddItemModal addItem={addItem} closeModal={closeAddItemModal} userID={userID} />
 		)}
+
 		{isViewItemModalOpen && selectedItem && (
 			<ViewItemModal
 			item={selectedItem}
@@ -290,6 +356,7 @@ const InventoryPage = () => {
 			onDelete={() => handleItemDelete(selectedItem.id)}
 			/>
 		)}
+
 		{isEditItemModalOpen && selectedItem && (
 			<EditItemModal
 			item={selectedItem}
@@ -301,8 +368,6 @@ const InventoryPage = () => {
 		<div className="recipe-recommendations">
 		<h3>Recommended Recipes Based on Your Inventory</h3>
 		<div className="search-section">
-
-		{/* Search Mode Buttons */}
 		<div className="search-modes">
 		<button
 		onClick={() => setSearchMode("All")}
@@ -324,7 +389,6 @@ const InventoryPage = () => {
 		</button>
 		</div>
 
-		{/* Search Bar */}
 		<div className="recipe-search-bar">
 		<input
 		type="text"
@@ -337,21 +401,25 @@ const InventoryPage = () => {
 		</div>
 
 		<div className="recommended-recipes">
-		{filteredRecommendedRecipes.map(({ recipe, matchedIngredient }, index) => (
+		{filteredRecommendedRecipes.map(({ recipe, matchedIngredients }, index) => (
 			<div key={index} className="recipe-item" onClick={() => openViewRecipeModal(recipe)}>
 			<h4>{recipe.name}</h4>
-			<p><strong>Matched based on:</strong> {matchedIngredient}</p>
+			{matchedIngredients.map((ingredient, i) => (
+				<p key={i}><strong>Matched based on:</strong> {ingredient}</p>
+			))}
 			{recipe.seasons && <p><strong>Seasons:</strong> {recipe.seasons.join(', ')}</p>}
 			<p><strong>{recipe.createdBy ? `Created by: ${recipe.createdBy.username}` : "Public Recipe"}</strong></p>
 			<p><strong>Taste:</strong> {recipe.taste}</p>
 			</div>
 		))}
 		</div>
+
 		</div>
 
 		<ViewRecipeModal isOpen={isViewRecipeModalOpen} onClose={closeViewRecipeModal} recipe={selectedRecipe} onSave={() => saveRecipe(selectedRecipe)} showSaveOption={selectedRecipe && canSaveRecipe(selectedRecipe)} />
 		</div>
 		</m.div>
 	);
+
 }
 export default InventoryPage;

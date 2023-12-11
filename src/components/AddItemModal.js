@@ -126,7 +126,28 @@ const cocktailIngredients = [
 	"Goji Berry",
 	"Matcha",
 	"Garam Masala",
-	"Cardamom"
+	"Cardamom",
+
+	//Extras
+	"Rhubarb",
+	"Lavender",
+	"Chamomile",
+	"Green Tea",
+	"Mango",
+	"Cilantro",
+	"Lemongrass",
+	"Kiwi",
+	"Blackberry",
+	"Allspice",
+	"Star Anise",
+	"Pear",
+	"Pomegranate",
+	"Fig",
+	"Walnut",
+	"Hazelnut",
+	"Caramel",
+	"Clove",
+	"Chocolate"
 ];
 
 const AddItemModal = ({ addItem, closeModal, userID }) => {

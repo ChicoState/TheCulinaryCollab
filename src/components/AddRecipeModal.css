@@ -27,7 +27,7 @@
 }
 
 .button-row {
-	display: flex;
+	display: center;
 	justify-content: space-between;
 	margin-top: 20px;
 }

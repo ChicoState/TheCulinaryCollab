@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: space-around;
 	padding: 20px;
-	background-color: #f5f5f5;
+	position: relative;
 }
 
 .users-section,
@@ -12,6 +12,24 @@
 	width: 30%;
 }
 
+/* .Position-list {
+	display: flex;
+	position: absolute;
+	top: 25%;
+	width: 10%;
+	background-color: blue;
+} */
+
+.friends-container .li {
+	display: flex;
+	width: 20vw;
+}
+
+.friend-item {
+	display:flex;
+	width: 100%;
+}
+
 .users-section h1,
 .friend-requests-section button,
 .friends-list h2,
@@ -19,7 +37,9 @@
 	margin-bottom: 10px;
 }
 
+
 .users-list {
+	overflow-y:scroll;
 	list-style: none;
 	padding: 0;
 }
@@ -32,8 +52,8 @@
 	margin-bottom: 10px;
 	background-color: #fff;
 	padding: 10px;
-	border-radius: 5px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	/* border-radius: 5px; */
+	/*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
 	transition: background-color 0.3s;
 }
 
@@ -61,11 +81,22 @@
 }
 
 .friend-requests-dropdown {
+	display: flex;
+	position: absolute;
+	top: 10%;
+	right: 8%;
+	width:15vw;
 	background-color: #fff;
-	border: 1px solid #ccc;
+	border-color: #ccc;
 	border-radius: 5px;
 	padding: 10px;
 	margin-top: 10px;
+}
+
+.accept-button {
+	display: flex;
+	position: absolute;
+	right: 41%;
 }
 
 .friend-requests-dropdown ul {
@@ -76,7 +107,10 @@
 .friend-requests-dropdown li {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 5px;
+	align-items: center;
+	/* margin-bottom: 5px; */
+	margin-bottom: 15px;
+	padding: 10px; 
 }
 
 .friend-requests-dropdown button {
@@ -96,10 +130,30 @@
 .messages-display {
 	max-height: 200px;
 	overflow-y: auto;
-	border: 1px solid #ccc;
+	/* border: 1px solid #ccc; */
 	border-radius: 5px;
 	padding: 10px;
 	margin-bottom: 10px;
+}
+
+.friend-requests-section button {
+	display: flex;
+	position:absolute;
+	right: 15%;
+	margin: 10px;
+	border-style:solid;
+	border-color: transparent;
+	border-radius: 10px;
+}
+
+.friends-container {
+	display: flex;
+	background-color: #f5f5f5;
+	border-style:solid;
+	box-shadow: 5x 5px 5px black;
+	height: 50vh;
+	width: 25vw;
+	overflow-y:scroll;
 }
 
 .messaging-interface input {
