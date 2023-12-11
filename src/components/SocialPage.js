@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { firestore, storage, auth } from '../firebase';
-import { collection, getDocs, doc, getDoc, addDoc, updateDoc, arrayRemove, arrayUnion, runTransaction, query, where, orderBy } from 'firebase/firestore';
+import { collection, limit, getDocs, doc, getDoc, addDoc, updateDoc, arrayRemove, arrayUnion, runTransaction, query, where, orderBy } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 import './SocialPage.css';
+import { sendEmailVerification } from 'firebase/auth';
+import { useUnreadMessages } from './UnreadMessagesContext';
+import {motion as m } from "framer-motion";
+//const user = auth.currentUser;
 const SocialPage = () => {
 	const [users, setUsers] = useState([]);
 	const [searchTerm, setSearchTerm] = useState('');
@@ -14,13 +18,37 @@ const SocialPage = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [currentMessage, setCurrentMessage] = useState('');
 	const [messages, setMessages] = useState([]);
+	const { friendsWithUnreadMessages, setFriendsWithUnreadMessages } = useUnreadMessages();
 	const [currentChatPartner, setCurrentChatPartner] = useState(null);
 	const navigate = useNavigate();
 	const defaultProfilePicUrl = 'https://firebasestorage.googleapis.com/v0/b/culinarycollab.appspot.com/o/profilePictures%2FD.png?alt=media&token=a23fae95-8ed6-4c3f-81da-9a49e92aa543';
 
-
-	const selectChatPartner = (friend) => {
+	const resendVerificationEmail = async () => {
+		const user = auth.currentUser;
+		if (user && !user.emailVerified) {
+			try {
+				await sendEmailVerification(user);
+				alert("Verification email sent!");
+			} catch (error) {
+				console.error("Error sending verification email: ", error);
+				alert("Error sending verification email. Please try again later.");
+			}
+		}
+	};
+	const selectChatPartner = async (friend) => {
 		navigate(`/chat/${friend.uid}`);
+
+		const userRef = doc(firestore, 'users', auth.currentUser.uid);
+		await updateDoc(userRef, {
+			[`lastReadTimestamp.${friend.uid}`]: new Date()
+		});
+
+		await fetchMessagesForChat(friend);
+		setFriendsWithUnreadMessages(prev => {
+			const updated = new Set(prev);
+			updated.delete(friend.uid);
+			return updated;
+		});
 	};
 
 	const sendMessage = async () => {
@@ -145,16 +173,91 @@ const SocialPage = () => {
 			const fetchedMessages = querySnapshot.docs.map(doc => doc.data());
 			setMessages(fetchedMessages);
 		};
+		/*
+		const checkForUnreadMessages = async () => {
+			let updatedFriendsWithUnread = new Set(friendsWithUnreadMessages);
+			const currentUserRef = doc(firestore, 'users', auth.currentUser.uid);
+			const currentUserSnap = await getDoc(currentUserRef);
+			if (!currentUserSnap.exists()) {
+				console.log('No such document!');
+				return;
+			}
 
+			const lastReadTimestamps = currentUserSnap.data().lastReadTimestamp || {};
+			friends.forEach(async (friend) => {
+				const lastRead = lastReadTimestamps[friend.uid] || new Date(0); 
+				const messagesQuery = query(
+					collection(firestore, 'messages'),
+					where('senderId', '==', friend.uid),
+					where('receiverId', '==', auth.currentUser.uid),
+					orderBy('timestamp', 'desc'),
+					limit(1)
+				);
+				const latestMessageSnap = await getDocs(messagesQuery);
+				if (!latestMessageSnap.empty) {
+					const latestMessage = latestMessageSnap.docs[0].data();
+					if (latestMessage.timestamp.toDate() > lastRead) {
+						updatedFriendsWithUnread.add(friend.uid);
+					} else {
+						updatedFriendsWithUnread.delete(friend.uid);
+					}
+				}
+			});
+			setFriendsWithUnreadMessages(updatedFriendsWithUnread);
+		};
+
+		checkForUnreadMessages().catch(console.error);
+		*/
 		fetchMessages();
 		fetchUsers();
 		fetchFriendRequests();
-	}, []);
+	}, [friends]);
+
+
+	useEffect(() => {
+		const checkForUnreadMessages = async () => {
+			if (!auth.currentUser) {
+				console.log('User is logged out');
+				return;
+			}
+			let updatedFriendsWithUnread = new Set(friendsWithUnreadMessages);
+			const currentUserRef = doc(firestore, 'users', auth.currentUser.uid);
+			const currentUserSnap = await getDoc(currentUserRef);
+			if (!currentUserSnap.exists()) {
+				console.log('No such document!');
+				return;
+			}
+
+			const lastReadTimestamps = currentUserSnap.data().lastReadTimestamp || {};
+			friends.forEach(async (friend) => {
+				const lastRead = lastReadTimestamps[friend.uid] || new Date(0);
+				const messagesQuery = query(
+					collection(firestore, 'messages'),
+					where('senderId', '==', friend.uid),
+					where('receiverId', '==', auth.currentUser.uid),
+					orderBy('timestamp', 'desc'),
+					limit(1)
+				);
+				const latestMessageSnap = await getDocs(messagesQuery);
+				if (!latestMessageSnap.empty) {
+					const latestMessage = latestMessageSnap.docs[0].data();
+					if (latestMessage.timestamp.toDate() > lastRead) {
+						updatedFriendsWithUnread.add(friend.uid);
+					} else {
+						updatedFriendsWithUnread.delete(friend.uid);
+					}
+				}
+			});
+			setFriendsWithUnreadMessages(updatedFriendsWithUnread);
+		};
+
+		checkForUnreadMessages().catch(console.error);
+	}, [friends, friendsWithUnreadMessages]);
 
 	const handleAccept = async (requestingUserid) => {
-		console.log("handle accept called <---");
-		console.log("Current user: ", auth.currentUser);
-		console.log("Requesting user: ", requestingUserid);
+		//console.log("handle accept called <---");
+		//console.log("Current user: ", auth.currentUser);
+		//console.log("Requesting user: ", requestingUserid);
 		const currentUserid = auth.currentUser.uid;
 
 		const currentUserRef = doc(firestore, 'users', currentUserid);
@@ -178,7 +281,7 @@ const SocialPage = () => {
 					friendsList: arrayUnion(currentUserid)
 				});
 			});
-			console.log("Friend request accepted");
+			alert("Friend request accepted!");
 			setFriendRequests(friendRequests.filter(req => req.uid !== requestingUserid));
 			const newFriendData = {
 				uid: requestingUserid,
@@ -187,30 +290,32 @@ const SocialPage = () => {
 			};
 			setFriends([...friends, newFriendData]);
 		} catch (error) {
-			console.error("Error accepting friend request: ", error);
+			alert("Error accepting friend request: ", error);
 		}
 	};
 
 
-	const handleReject = async (requestingUserId) => {
+	const handleReject = async (requestingUser) => {
 		const currentUserRef = doc(firestore, 'users', auth.currentUser.uid);
 		try {
 			const currentUserSnap = await getDoc(currentUserRef);
 			if (currentUserSnap.exists()) {
 				const currentUserData = currentUserSnap.data();
-				const updatedFriendRequests = currentUserData.friendRequests.filter(request => request.uid !== requestingUserId);
+				const updatedFriendRequests = currentUserData.friendRequests.filter(request => request.uid !== requestingUser.uid);
 
 				await updateDoc(currentUserRef, {
 					friendRequests: updatedFriendRequests
 				});
-				setFriendRequests(updatedFriendRequests);
 
-				console.log("Friend request rejected");
+
+				setFriendRequests(prevRequests => prevRequests.filter(req => req.uid !== requestingUser.uid));
+
+				alert("Friend request rejected");
 			} else {
-				console.log("Current user document not found");
+				alert("Current user document not found");
 			}
 		} catch (error) {
-			console.error("Error rejecting friend request: ", error);
+			alert("Error rejecting friend request: ", error);
 		}
 	};
 
@@ -224,7 +329,29 @@ const SocialPage = () => {
 		user.username.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
-	return (
+
+if (!auth.currentUser) {
+    return (
+        <div className="login-prompt">
+            <h1>Please Log In</h1>
+            <p>To access this page, you need to be logged in.</p>
+        </div>
+    );
+} else if (!auth.currentUser.emailVerified) {
+    return (
+        <div className="email-verification-prompt">
+            <h1>Email Verification Required</h1>
+            <p>Your email address has not been verified. Please check your email inbox for the verification link, or click the button below to resend the verification email.</p>
+            <button onClick={resendVerificationEmail}>
+                Resend Verification Email
+            </button>
+        </div>
+    );
+}
+
+
+return (
+		<m.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.75}}>
 		<div className="social-page-container">
 		<div className="users-section">
 		<h1>All Users</h1>
@@ -246,43 +373,42 @@ const SocialPage = () => {
 
 
 		</div>
-		{/* Friends request section */}
+		{/* Friend Requests section */}
 		<div className="friend-requests-section">
-		<button onClick={() => setShowDropdown(!showDropdown)}>Friend Requests</button>
+		<button onClick={() => setShowDropdown(!showDropdown)}>
+		Friend Requests ({friendRequests.length})
+		</button>
 		{showDropdown && (
 			<div className="friend-requests-dropdown">
 			<ul>
 			{friendRequests.map((request, index) => (
 				<li key={index}>
 				{request.username}
+				{/* Accept Reject button section */}
 				<button onClick={() => handleAccept(request.uid)}>Accept</button>
-				<button onClick={() => handleReject(request.uid)}>Reject</button>
+				<button onClick={() => handleReject(request)}>Reject</button>
 				</li>
 			))}
 			</ul>
 			</div>
 		)}
-
 		</div>
 		{/* Friends list */}
 		<div className="friends-list">
-		<h1>My Friends</h1>
-		<input
-		type="text"
-		placeholder="Search Friends..."
-		/>
-		<div className="friends-container">
-
-
-		</div>
+		<h2>My Friends</h2>
 		<ul>
 		{friends.map((friend) => (
-			<li key={friend.uid} className="friend-item" onClick={() => selectChatPartner(friend)}>
+			<li 
+			key={friend.uid} 
+			className={`friend-item ${friendsWithUnreadMessages.has(friend.uid) ? 'bold' : ''}`} 
+			onClick={() => selectChatPartner(friend)}
+			>
 			<span className="friend-username">{friend.username}</span>
 			<img src={friend.profilePic} alt={`${friend.username}'s profile`} className="friend-profile-picture" />
 			</li>
 		))}
 		</ul>
+
 		</div>
 		{/* Messaging interface */}
 		<div className="messaging-interface">
@@ -300,7 +426,9 @@ const SocialPage = () => {
 			<button onClick={sendMessage}>Send</button>
 			</>
 		)}
-		</div>              </div>
+		</div>              
+		</div>
+		</m.div>
 	);
 };
 
